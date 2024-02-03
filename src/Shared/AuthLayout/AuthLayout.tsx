@@ -3,7 +3,7 @@ import authImage from "../../assets/a7c916596e30117cc376620019087ff8.png";
 
 export default function AuthLayout() {
   return (
-    <div className="bg-auth h-screen">
+    <div className="bg-auth h-[screen]">
       <div className="text-white container p-8">
         <div className="flex">
           <div className="userData me-3 w-1/2">
