@@ -15,7 +15,6 @@ import RequsetResetPass from './Components/RequsetResetPass/RequsetResetPass'
 import RestPassword from './Components/RestPassword/RestPassword'
 import ChangePassword from './Components/ChangePassword/ChangePassword'
 import VerfiyUser from './Components/VerfiyUser/VerfiyUser'
-
 function App() {
 
   const routes = createBrowserRouter([
@@ -48,7 +47,6 @@ function App() {
   ])
   return (
     <>
-      
       <ToastContainer
         theme='colored'
         autoClose={2000}
@@ -59,7 +57,6 @@ function App() {
         draggable={true}
       />
       <RouterProvider router={routes}/>
-
     </>
   )
 }
