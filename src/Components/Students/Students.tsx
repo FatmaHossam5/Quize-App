@@ -2,7 +2,8 @@ import desk from '../../assets/Quiz img (1).png'
 import group from '../../assets/img (1).png'
 import userImg from '../../assets/user img.png'
 export default function Students() {
-  const students=[{id:'1',Name:"Emanual James",Rank:"2nd",Score:"87"}
+  const students=[
+    {id:'1',Name:"Emanual James",Rank:"2nd",Score:"87"}
   ,{id:'2',Name:"Alice Jasmine",Rank:"12th",Score:"77"}
   ,{id:'3',Name:"Harrison Menlaye",Rank:"3rd",Score:"97"},
   {id:'4',Name:"Jones Doherty",Rank:"5th",Score:"88"},
