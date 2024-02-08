@@ -1,16 +1,15 @@
 import { useForm } from "react-hook-form";
-import AlertMessage from "../../Shared/AlertMessage/AlertMessage";
-import { useRef } from "react";
+import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
+import AuthButton from "../../Shared/AuthButton/AuthButton";
 
 export default function RestPassword() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    getValues,
   } = useForm();
-  const password = useRef({});
-  password.current = watch("password", "");
+
   function onSubmit(data: object) {
     console.log(data);
   }
@@ -46,7 +45,7 @@ export default function RestPassword() {
               placeholder="Type your email"
             />
             {errors.email && (
-              <AlertMessage message={String(errors.email.message)} />
+              <ErrorMessage>{String(errors.email.message)}</ErrorMessage>
             )}
           </div>
         </div>
@@ -75,7 +74,7 @@ export default function RestPassword() {
               placeholder="Choose your otp"
             />
             {errors.otp && (
-              <AlertMessage message={String(errors.otp.message)} />
+              <ErrorMessage>{String(errors.otp.message)}</ErrorMessage>
             )}
           </div>
         </div>
@@ -106,7 +105,7 @@ export default function RestPassword() {
               placeholder="Type your password"
             />
             {errors.password && (
-              <AlertMessage message={String(errors.password.message)} />
+              <ErrorMessage>{String(errors.password.message)}</ErrorMessage>
             )}
           </div>
         </div>
@@ -127,7 +126,7 @@ export default function RestPassword() {
               {...register("cPassword", {
                 validate: (value) => {
                   return (
-                    value !== password.current ||
+                    value == getValues("password") ||
                     "Confirm Password mismatch password"
                   );
                 },
@@ -138,18 +137,12 @@ export default function RestPassword() {
               placeholder="Type your confirm password"
             />
             {errors.cPassword && (
-              <AlertMessage message={String(errors.cPassword.message)} />
+              <ErrorMessage>{String(errors.cPassword.message)}</ErrorMessage>
             )}
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="bg-slate-50 transition duration-100 hover:bg-gray-800  text-slate-950  hover:text-slate-50  rounded-lg px-4 py-2 mt-2 font-medium "
-        >
-          Reset{" "}
-          <i className="fa-solid fa-check ms-1 text-white p-1 rounded-full bg-black"></i>
-        </button>
+        <AuthButton>Reset</AuthButton>
       </form>
     </>
   );

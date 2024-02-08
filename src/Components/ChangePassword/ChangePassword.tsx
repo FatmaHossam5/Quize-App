@@ -1,18 +1,15 @@
-import { useRef } from "react";
 import { useForm } from "react-hook-form";
-import AlertMessage from "../../Shared/AlertMessage/AlertMessage";
+import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
+import AuthButton from "../../Shared/AuthButton/AuthButton";
 
 export default function ChangePassword() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    getValues,
   } = useForm();
-  const password = useRef({});
-  password.current = watch("password", "");
-  const password_new = useRef({});
-  password_new.current = watch("password_new", "");
+
   function onSubmit(data: object) {
     console.log(data);
   }
@@ -48,7 +45,7 @@ export default function ChangePassword() {
               placeholder="Type your password"
             />
             {errors.password && (
-              <AlertMessage message={String(errors.password.message)} />
+              <ErrorMessage>{String(errors.password.message)}</ErrorMessage>
             )}
           </div>
         </div>
@@ -72,12 +69,9 @@ export default function ChangePassword() {
                   value: 8,
                   message: "new password should be greater than 8 digits",
                 },
-                validate: (value) => {
-                  return (
-                    value !== password.current ||
-                    "The new password must not resemble the old one."
-                  );
-                },
+                validate: (value) =>
+                  value == getValues("password") &&
+                  "new password and old password should not match ",
               })}
               type="password"
               id="Confirm-Password"
@@ -85,7 +79,7 @@ export default function ChangePassword() {
               placeholder="Type your confirm password"
             />
             {errors.password_new && (
-              <AlertMessage message={String(errors.password_new.message)} />
+              <ErrorMessage>{String(errors.password_new.message)}</ErrorMessage>
             )}
           </div>
         </div>
@@ -96,39 +90,32 @@ export default function ChangePassword() {
           </label>
           <div
             className={`flex rounded-md border-3 ${
-              !errors.cPassword ? "border-white" : "border-red-500"
+              !errors.confirmNewPassword ? "border-white" : "border-red-500"
             }`}
           >
             <span className="flex select-none items-center me-3 pl-3 text-white ">
               <i className="fa-solid fa-key"></i>
             </span>
             <input
-              {...register("cPassword", {
-                validate: (value) => {
-                  return (
-                    value == password_new.current ||
-                    "Confirm Password mismatch new password"
-                  );
-                },
+              {...register("confirmNewPassword", {
+                validate: (value) =>
+                  value === getValues("password_new") ||
+                  "passwords is mismatch",
               })}
               type="password"
               id="Confirm-Password"
               className="block px-2  flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
               placeholder="Type your confirm password"
             />
-            {errors.cPassword && (
-              <AlertMessage message={String(errors.cPassword.message)} />
+            {errors.confirmNewPassword && (
+              <ErrorMessage>
+                {String(errors.confirmNewPassword.message)}
+              </ErrorMessage>
             )}
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="bg-slate-50 transition duration-100 hover:bg-gray-800  text-slate-950  hover:text-slate-50  rounded-lg px-4 py-2 mt-2 font-medium "
-        >
-          Change{" "}
-          <i className="fa-solid fa-check ms-1 text-white p-1 rounded-full bg-black"></i>
-        </button>
+        <AuthButton>Change</AuthButton>
       </form>
     </>
   );

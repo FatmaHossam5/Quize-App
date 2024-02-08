@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import AlertMessage from "../../Shared/AlertMessage/AlertMessage";
+import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
 import AuthButton from "../../Shared/AuthButton/AuthButton";
 export default function Rigester() {
   const {
@@ -8,6 +8,7 @@ export default function Rigester() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   function onSubmit(data: object) {
     console.log(data);
   }
@@ -17,15 +18,15 @@ export default function Rigester() {
       <h3 className="text-2xl  text-secondry">
         Create your account and start using QuizWiz!
       </h3>
-      <div className="grid grid-cols-2 gap-2 md:grid-cols-3 mt-3">
+      <div className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:mt-3">
         <Link to="/" className="signin ">
-          <div className="content text-8xl py-3 bg-stone-700 rounded-lg my-1 text-center border-4 border-stone-700">
+          <div className="content text-8xl xl:text-6xl lg:text-6xl py-3 bg-stone-700 rounded-lg my-1 text-center border-4 border-stone-700">
             <i className="fa-solid fa-user "></i>
             <p className="text-base mt-2">Sign in</p>
           </div>
         </Link>
-        <Link to="/rigester" className="signup ">
-          <div className="content text-8xl py-3 bg-stone-700 my-1 rounded-lg text-center border-4 border-secondry">
+        <Link to="/register" className="signup ">
+          <div className="content text-8xl xl:text-6xl lg:text-6xl py-3 bg-stone-700 my-1 rounded-lg text-center border-4 border-secondry">
             <i className="fa-solid fa-user-plus text-secondry "></i>
             <p className="text-base mt-2">Sign Up</p>
           </div>
@@ -33,8 +34,8 @@ export default function Rigester() {
         <div className="signup w-1/2"></div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-3">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 ">
+      <form onSubmit={handleSubmit(onSubmit)} className="xl:mt-3">
+        <div className="grid xl:grid-cols-2 lg:grid-cols-1 md:grid-cols-2 gap-2 ">
           <div className="firstName">
             <label htmlFor="firstName" className="w-full ps-1 mb-1 ">
               Your first name
@@ -69,7 +70,7 @@ export default function Rigester() {
                 placeholder="Type your first name"
               />
               {errors.firstName && (
-                <AlertMessage message={String(errors.firstName.message)} />
+                <ErrorMessage>{String(errors.firstName.message)}</ErrorMessage>
               )}
             </div>
           </div>
@@ -104,7 +105,7 @@ export default function Rigester() {
                 placeholder="Type your last name"
               />
               {errors.lastName && (
-                <AlertMessage message={String(errors.lastName.message)} />
+                <ErrorMessage>{String(errors.lastName.message)}</ErrorMessage>
               )}
             </div>
           </div>
@@ -136,7 +137,7 @@ export default function Rigester() {
               placeholder="Type your email"
             />
             {errors.email && (
-              <AlertMessage message={String(errors.email.message)} />
+              <ErrorMessage>{String(errors.email.message)}</ErrorMessage>
             )}
           </div>
         </div>
@@ -162,7 +163,7 @@ export default function Rigester() {
               <option value="2">Learner</option>
             </select>
             {errors.role && (
-              <AlertMessage message={String(errors.role.message)} />
+              <ErrorMessage>{String(errors.role.message)}</ErrorMessage>
             )}
           </div>
         </div>
@@ -193,12 +194,12 @@ export default function Rigester() {
               placeholder="Type your password"
             />
             {errors.password && (
-              <AlertMessage message={String(errors.password.message)} />
+              <ErrorMessage>{String(errors.password.message)}</ErrorMessage>
             )}
           </div>
         </div>
 
-        <AuthButton text={String("Sign Up")} />
+        <AuthButton>Sign Up</AuthButton>
       </form>
     </>
   );
