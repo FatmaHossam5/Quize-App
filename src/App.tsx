@@ -10,7 +10,7 @@ import Quizzes from './Components/Quizzes/Quizzes'
 import Results from './Components/Results/Results'
 import AuthLayout from './Shared/AuthLayout/AuthLayout'
 import Login from './Components/Login/Login'
-import Rigester from './Components/Rigester/Rigester'
+import Rigester from './Components/Register/Register'
 import RequsetResetPass from './Components/RequsetResetPass/RequsetResetPass'
 import RestPassword from './Components/RestPassword/RestPassword'
 import ChangePassword from './Components/ChangePassword/ChangePassword'
@@ -37,11 +37,10 @@ function App() {
       children : [
         { index: true, element: <Login/> },
         { path : "login", element: <Login/> },
-        { path : "rigester", element: <Rigester/> },
-        { path : "requsetRestPass", element: <RequsetResetPass/> },
-        { path : "restPassword", element: <RestPassword/> }, 
-        { path : "changePassword", element: <ChangePassword/> },
-        { path : "verify", element: <VerfiyUser/> },
+        { path : "register", element: <Rigester/> },
+        { path : "request-reset-password", element: <RequsetResetPass/> },
+        { path : "reset-password", element: <RestPassword/> }, 
+        { path : "change-password", element: <ChangePassword/> },
       ]
     }
   ])
