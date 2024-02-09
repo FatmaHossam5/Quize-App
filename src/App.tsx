@@ -14,7 +14,8 @@ import Rigester from './Components/Register/Register'
 import RequsetResetPass from './Components/RequsetResetPass/RequsetResetPass'
 import RestPassword from './Components/RestPassword/RestPassword'
 import ChangePassword from './Components/ChangePassword/ChangePassword'
-import VerfiyUser from './Components/VerfiyUser/VerfiyUser'
+import { Provider } from 'react-redux'
+import store from './Redux/Store'
 function App() {
 
   const routes = createBrowserRouter([
@@ -46,16 +47,18 @@ function App() {
   ])
   return (
     <>
-      <ToastContainer
+<Provider store={store}>
+<ToastContainer
         theme='colored'
         autoClose={2000}
-        position='top-left'
+        position='top-right'
         hideProgressBar={false}
         closeOnClick={true}
         pauseOnHover={true}
         draggable={true}
       />
       <RouterProvider router={routes}/>
+</Provider>
     </>
   )
 }

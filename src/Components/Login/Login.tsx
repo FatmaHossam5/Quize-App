@@ -2,23 +2,31 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
 import AuthButton from "../../Shared/AuthButton/AuthButton";
+import useCustomFetch from "../../ApiUtls/AuthApiUtls";
+import Loading from "../../Shared/Loading/Loading";
+
 
 export default function Login() {
+
+  const { customFetch, loading } = useCustomFetch();
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  
+  
   function onSubmit(data: object) {
-    console.log(data);
-  }
+    customFetch("/login",data,"/dashboard");
+  };
 
   return (
     <>
       <h3 className="text-2xl  text-secondry">
         Continue your learning journey with QuizWiz!
       </h3>
+
       <div className="grid grid-cols-2 gap-2 md:grid-cols-3 my-3">
         <Link to="/" className="signin">
           <div className="content text-8xl xl:text-6xl lg:text-6xl py-3 bg-stone-700rounded-lg text-center bg-stone-700 border-4 border-secondry">
@@ -37,7 +45,7 @@ export default function Login() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="my-12">
         <div className="email mt-2">
-          <label htmlFor="email" className="w-full ps-1 mb-1">
+          <label htmlFor="email" className="w-full ps-1 mb-1 ">
             Registered email address
           </label>
           <div
@@ -99,8 +107,7 @@ export default function Login() {
         </div>
 
         <div className="flex mt-3 mb-16 justify-between items-end">
-          <AuthButton>Sign In</AuthButton>
-
+          <AuthButton>{loading?<Loading/>:"Sign In"}</AuthButton>
           <p>
             Forgot password?{" "}
             <Link className="text-secondry" to="/request-reset-password">

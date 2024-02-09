@@ -1,8 +1,13 @@
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
 import AuthButton from "../../Shared/AuthButton/AuthButton";
+import useCustomFetch from "../../ApiUtls/AuthApiUtls";
+import Loading from "../../Shared/Loading/Loading";
+import {Data} from './ResetInterface.ts'
 
 export default function RestPassword() {
+  const {customFetch,loading}=useCustomFetch();
+
   const {
     register,
     handleSubmit,
@@ -10,9 +15,14 @@ export default function RestPassword() {
     getValues,
   } = useForm();
 
-  function onSubmit(data: object) {
-    console.log(data);
+  function onSubmit(data: Data) {
+    //forget password api do not send email
+    delete data.cPassword;
+    
+    customFetch("/reset-password",data,"/");
+
   }
+  
 
   return (
     <>
@@ -142,7 +152,7 @@ export default function RestPassword() {
           </div>
         </div>
 
-        <AuthButton>Reset</AuthButton>
+        <AuthButton>{loading?<Loading/>:"Reset"}</AuthButton>
       </form>
     </>
   );

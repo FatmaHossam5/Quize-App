@@ -2,7 +2,12 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
 import AuthButton from "../../Shared/AuthButton/AuthButton";
+import useCustomFetch from "../../ApiUtls/AuthApiUtls";
+import Loading from "../../Shared/Loading/Loading";
 export default function Rigester() {
+
+  const {customFetch,loading}=useCustomFetch();
+
   const {
     register,
     handleSubmit,
@@ -10,7 +15,8 @@ export default function Rigester() {
   } = useForm();
 
   function onSubmit(data: object) {
-    console.log(data);
+    customFetch("/register",data,"/")
+
   }
 
   return (
@@ -18,6 +24,7 @@ export default function Rigester() {
       <h3 className="text-2xl  text-secondry">
         Create your account and start using QuizWiz!
       </h3>
+
       <div className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:mt-3">
         <Link to="/" className="signin ">
           <div className="content text-8xl xl:text-6xl lg:text-6xl py-3 bg-stone-700 rounded-lg my-1 text-center border-4 border-stone-700">
@@ -36,14 +43,14 @@ export default function Rigester() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="xl:mt-3">
         <div className="grid xl:grid-cols-2 lg:grid-cols-1 md:grid-cols-2 gap-2 ">
-          <div className="firstName">
-            <label htmlFor="firstName" className="w-full ps-1 mb-1 ">
+          <div className="first_name">
+            <label htmlFor="first_name" className="w-full ps-1 mb-1 ">
               Your first name
             </label>
 
             <div
               className={`flex rounded-md border-3 ${
-                !errors.firstName ? "border-white" : "border-red-500"
+                !errors.first_name ? "border-white" : "border-red-500"
               }`}
             >
               <div className="flex select-none items-center me-3 pl-3 text-white ">
@@ -53,7 +60,7 @@ export default function Rigester() {
               </div>
 
               <input
-                {...register("firstName", {
+                {...register("first_name", {
                   required: "First Name is required",
                   minLength: {
                     value: 2,
@@ -65,30 +72,30 @@ export default function Rigester() {
                   },
                 })}
                 type="text"
-                id="firstName"
+                id="first_name"
                 className="block px-2  flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 placeholder="Type your first name"
               />
-              {errors.firstName && (
-                <ErrorMessage>{String(errors.firstName.message)}</ErrorMessage>
+              {errors.first_name && (
+                <ErrorMessage>{String(errors.first_name.message)}</ErrorMessage>
               )}
             </div>
           </div>
 
-          <div className="lastName">
-            <label htmlFor="lastName" className="w-full ps-1 mb-1 ">
+          <div className="last_name">
+            <label htmlFor="last_name" className="w-full ps-1 mb-1 ">
               Your last name
             </label>
             <div
               className={`flex rounded-md border-3 ${
-                !errors.lastName ? "border-white" : "border-red-500"
+                !errors.last_name ? "border-white" : "border-red-500"
               }`}
             >
               <span className="flex select-none items-center me-3 pl-3 text-white ">
                 <i className="fa-solid fa-address-card"></i>
               </span>
               <input
-                {...register("lastName", {
+                {...register("last_name", {
                   required: "Last Name is required",
                   minLength: {
                     value: 2,
@@ -100,12 +107,12 @@ export default function Rigester() {
                   },
                 })}
                 type="text"
-                id="lastName"
+                id="last_name"
                 className="block px-2  flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 placeholder="Type your last name"
               />
-              {errors.lastName && (
-                <ErrorMessage>{String(errors.lastName.message)}</ErrorMessage>
+              {errors.last_name && (
+                <ErrorMessage>{String(errors.last_name.message)}</ErrorMessage>
               )}
             </div>
           </div>
@@ -159,8 +166,8 @@ export default function Rigester() {
               id="role"
               className="mt-1  border-none p-2 w-full focus:outline-none bg-auth "
             >
-              <option value="1">Instructor</option>
-              <option value="2">Learner</option>
+              <option value="Instructor">Instructor</option>
+              <option value="Learner">Learner</option>
             </select>
             {errors.role && (
               <ErrorMessage>{String(errors.role.message)}</ErrorMessage>
@@ -199,7 +206,7 @@ export default function Rigester() {
           </div>
         </div>
 
-        <AuthButton>Sign Up</AuthButton>
+        <AuthButton>{loading?<Loading/>:"Sign Up"}</AuthButton>
       </form>
     </>
   );
