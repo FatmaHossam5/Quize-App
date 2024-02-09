@@ -3,10 +3,8 @@ export default function NavBar() {
   return (
     <>
     <div className="flex   ">
-    <div className=" pt-3  text-center  w-1/6 border-r-[1px]">
-      <i  className="fa-solid fa-bars pr-5"></i> <i className="fa-solid fa-circle-check"></i><i   className="fa-solid fa-circle-xmark"></i>
-      </div>
-      <div className=" w-full flex justify-between">
+   
+      <div className=" w-full flex justify-between border-b-2">
       <div><h3 className="font-bold mt-3 ">Dashboard</h3></div>
   
   <div className=" flex gap-x-[45px]   ">

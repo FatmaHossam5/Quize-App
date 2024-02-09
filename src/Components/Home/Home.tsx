@@ -59,7 +59,7 @@ export default function Home() {
         <div className="border w-1/3 mt-2 mr-3 rounded-xl">
           <h3 className="pl-3">   Top 5 Students </h3>
           {students.map((student,id)=><>
-            <div key={id} className=" m-4  ">
+            <div key={id} className=" my-4 ml-1 ">
             <div className='border rounded-xl '>
               <div className='flex '>
                 <img src={userImg} className='w-2/12' alt="" />

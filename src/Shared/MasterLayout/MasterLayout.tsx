@@ -5,25 +5,16 @@ import NavBar from "../NavBar/NavBar";
 export default function MasterLayout() {
   return (
     <>
-    <div>
-      <div className=' border-b-[1px] border-zinc-300'>
-   
-      <div className="" >
-            <NavBar/> 
-        </div> 
-      
-        </div>
-       <div className="flex">
-       <div className=' w-1/6 border-r-[1px] '>
-            <SideBar/> 
-        </div>
-            <div className=' w-full '>
-                <Outlet/>
-            </div>
-       </div>
-   
-       
-            </div>
+
+
+<div className=" flex">
+  <div className="w-auto"> 
+    <SideBar/> </div>
+  <div className="w-[100%]">
+  <NavBar/> 
+  <Outlet/>
+  </div>
+</div>
      
     </>
   )

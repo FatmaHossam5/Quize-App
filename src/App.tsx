@@ -29,7 +29,7 @@ function App() {
         { path : "student", element: <Students/> },
         { path : "quizzes", element: <Quizzes/> },
         { path : "results", element: <Results/> },
-        { path : "1", element: <AddModal/> },
+
 
       ]
     },
