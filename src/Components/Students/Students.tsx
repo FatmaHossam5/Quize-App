@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import userImg from '../../assets/user img.png'
+import AddModal from '../../Shared/AddModal/AddModal';
 export default function Students() {
   const Groups=['Group1','Group2','Group3']
   const students=[
@@ -17,14 +18,26 @@ export default function Students() {
 ];
 //  const firstArray=students.slice(0,10)
  
-  
+const [isModalOpen, setIsModalOpen] = useState(false);
+
+const handleOpenModal = () => {
+  setIsModalOpen(true);
+};
+
+const handleCloseModal = () => {
+  setIsModalOpen(false);
+};
+const handleButtonClick = () => {
+  console.log("Button clicked!");
+  // Handle the button click logic here
+};
   return (
     <>
     <div>
       <div className=' flex justify-end' >
         <div className='rounded-3xl border border-black text-center  w-40 mt-2  '>
         <i className="fa-solid fa-circle-plus"></i>
-        <button>Add Student</button>
+        <button onClick={handleOpenModal} >Add Student</button>
         </div>
    
       </div>
@@ -38,7 +51,41 @@ export default function Students() {
             <button key={index} className={`mr-5 rounded-3xl border ${index===0? 'bg-black text-white':''} border-black w-32 mt-4`}>{group}</button>
           </>)}
         </div>
+        <div >
+          <AddModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            onButtonClick={handleButtonClick} 
+            buttonLabel="Add Student"
+            width="100%"
+            height="350px"
+          >
+            
+        
 
+            {/* Text name Field */}
+            <div className="mb-4">
+              <input
+                style={{ width: "410px" }}
+                className="border rounded w-full py-2 px-3"
+                id="studentName"
+                type="text"
+                placeholder="name"
+              />
+            </div>
+            {/* phone Field */}
+            <div className="mb-2">
+            <input
+                style={{ width: "410px" }}
+                className="border rounded w-full py-2 px-3"
+                id="studentPhone"
+                type="number"
+                placeholder="phone"
+              />
+            
+            </div>
+          </AddModal>
+        </div>
         <div className="grid grid-cols-2 gap-4 mt-4 border mx-5 rounded-2xl pr-4 ">
     {students.map((student, index) => (
       <div key={index} className="flex flex-col ml-4 mt-4">

@@ -15,6 +15,7 @@ import RequsetResetPass from './Components/RequsetResetPass/RequsetResetPass'
 import RestPassword from './Components/RestPassword/RestPassword'
 import ChangePassword from './Components/ChangePassword/ChangePassword'
 import VerfiyUser from './Components/VerfiyUser/VerfiyUser'
+import AddModal from './Shared/AddModal/AddModal'
 function App() {
 
   const routes = createBrowserRouter([
@@ -28,6 +29,8 @@ function App() {
         { path : "student", element: <Students/> },
         { path : "quizzes", element: <Quizzes/> },
         { path : "results", element: <Results/> },
+        { path : "1", element: <AddModal/> },
+
       ]
     },
     {
