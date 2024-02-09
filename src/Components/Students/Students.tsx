@@ -1,93 +1,74 @@
-import desk from '../../assets/Quiz img (1).png'
-import group from '../../assets/img (1).png'
+import React from 'react'
 import userImg from '../../assets/user img.png'
 export default function Students() {
+  const Groups=['Group1','Group2','Group3']
   const students=[
-    {id:'1',Name:"Emanual James",Rank:"2nd",Score:"87"}
-  ,{id:'2',Name:"Alice Jasmine",Rank:"12th",Score:"77"}
-  ,{id:'3',Name:"Harrison Menlaye",Rank:"3rd",Score:"97"},
-  {id:'4',Name:"Jones Doherty",Rank:"5th",Score:"88"},
-  {id:'5',Name:"Harrison Menlaye",Rank:"3rd",Score:"97"}];
-  const exams=[
-    {id:'1',ExamName:"Introduction to computer programming",Date:"12/03/2023",Time:" 09:00 AM",enrolledStudent:"32",img:desk},
-    {id:'2',ExamName:"Psychology 101",Date:"12/03/2023",Time:" 09:00 AM",enrolledStudent:"32",img:group},
-    {id:'3',ExamName:"React Js",Date:"12/05/2023",Time:" 09:00 AM",enrolledStudent:"20",img:desk},
-    {id:'4',ExamName:"Node Js",Date:"12/07/2023",Time:" 10:00 AM",enrolledStudent:"32",img:group},
-    {id:'5',ExamName:"Basics",Date:"12/09/2023",Time:" 11:00 AM",enrolledStudent:"25",img:desk},
-  ]
+    {id:'1',Name:"Emanual James",Rank:"2nd",Score:"87",img:userImg}
+  ,{id:'2',Name:"Alice Jasmine",Rank:"12th",Score:"77",img:userImg}
+  ,{id:'3',Name:"Harrison Menlaye",Rank:"3rd",Score:"97",img:userImg},
+  {id:'4',Name:"Jones Doherty",Rank:"5th",Score:"88",img:userImg},
+  {id:'5',Name:"Harrison Menlaye",Rank:"3rd",Score:"97",img:userImg},
+  {id:'6',Name:"Emanual James",Rank:"2nd",Score:"87",img:userImg}
+  ,{id:'7',Name:"Alice Jasmine",Rank:"12th",Score:"77",img:userImg}
+  ,{id:'8',Name:"Harrison Menlaye",Rank:"3rd",Score:"97",img:userImg},
+  {id:'9',Name:"Jones Doherty",Rank:"5th",Score:"88",img:userImg},
+  {id:'10',Name:"Harrison Menlaye",Rank:"3rd",Score:"97",img:userImg},
+  {id:'10',Name:"Harrison Menlaye",Rank:"3rd",Score:"97",img:userImg},
+];
+//  const firstArray=students.slice(0,10)
+ 
+  
   return (
     <>
-      <div className="flex  ">
-        {/* EXAMS */}
-        <div className="border w-2/3 mt-2 mx-2 rounded-xl">
-          <h3 className="pl-3">   Upcoming 5 quizzes </h3>
-{exams.map((exam,id)=><>
-  <div key={id} className=' m-4' >
-            <div className='border rounded-xl '>
-              <div className='flex '>
-                <img src={exam.img} className='w-2/12' alt="" />
-           
-                <div className=' ml-2 mt-4 w-5/6'>
-                  <h3>{exam.ExamName}</h3>
-                  <span className='border-r pr-1'>{exam.Date}</span> <span>{exam.Time}</span>
-                  <div className='flex mt-5 mb-2  justify-between'>
-                    <h4>
-                      No.of students enrolled :<span>{exam.enrolledStudent}</span>
-                    </h4>
-                    <div className='flex'>
-                      <h4 className='pr-2'>open</h4>
-                      <i className="fa-solid fa-circle-arrow-right mt-[5px] text-[#c5d86d] pr-2"></i>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-
-
-            </div>
-          </div>
-</>)}
-
-  
-
-       
-  
+    <div>
+      <div className=' flex justify-end' >
+        <div className='rounded-3xl border border-black text-center  w-40 mt-2  '>
+        <i className="fa-solid fa-circle-plus"></i>
+        <button>Add Student</button>
         </div>
-        {/*STUDENTS*/}
-        <div className="border w-1/3 mt-2 mr-3 rounded-xl">
-          <h3 className="pl-3">   Top 5 Students </h3>
-          {students.map((student,id)=><>
-            <div key={id} className=" m-4  ">
-            <div className='border rounded-xl '>
-              <div className='flex '>
-                <img src={userImg} className='w-2/12' alt="" />
-                <div className=' ml-2 mt-2 w-5/6'>
-                  <div className='flex justify-between'>
-                    <h3 className='font-bold'>{student.Name}</h3>
-                    <i className="fa-solid fa-circle-arrow-right mt-[5px]  pr-2 mr-3 "></i>
-                  </div>
-                  <div className='flex'>
-                    <h5 className='border-r '>class Rank:<span> {student.Rank} </span></h5>
-                    <h5 className='pl-2'>Average score :<span>{student.Score}%</span></h5>
-                  </div>
-
-
-                </div>
-
-              </div>
-
-
-
-            </div>
-          </div>
-          </>)}
-       
-    
-
-        </div>
-
+   
       </div>
+      <div>
+        <h3 className='ml-12'>
+          Students List
+        </h3>
+        <div className='ml-12'>
+          {Groups.map((group,index)=><>
+          
+            <button key={index} className={`mr-5 rounded-3xl border ${index===0? 'bg-black text-white':''} border-black w-32 mt-4`}>{group}</button>
+          </>)}
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 mt-4 border mx-5 rounded-2xl pr-4 ">
+    {students.map((student, index) => (
+      <div key={index} className="flex flex-col ml-4 mt-4">
+      
+          
+        <div key={student.id} className="border rounded-2xl flex justify-between align-items-center">
+          <div className='flex'>
+            <img src={student.img} alt={student.Name} className="w-16 h-16 mr-4" />
+            <div className="mt-2">
+              <p className="font-semibold mx-2">{student.Name}</p>
+              <span className='border-r mx-1 px-1'>Rank: {student.Rank}</span>
+              <span >Score: {student.Score}</span>
+            </div>
+            </div>
+            <div>
+              <button>
+              <i className="fa-solid fa-circle-arrow-right mt-[5px]  pr-2 mr-3 "></i>
+              </button>
+            </div>
+          </div>
+     
+      </div>
+    ))}
+  </div>
+
+  
+   
+      </div>
+    </div>
     </>
   )
 }
+
