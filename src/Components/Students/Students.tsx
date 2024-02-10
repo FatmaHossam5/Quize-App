@@ -32,17 +32,20 @@ export default function Students() {
 
   };
   
-  const getAllStudents = () => {
-    axios.get('https://upskilling-egypt.com:3005/api/student/without-group', {
-        headers: {
-            Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWMyMTcxM2JmYzdmMjc2YTNiYmZkYzAiLCJlbWFpbCI6ImVuZy5mYXRtYS5mYXRlaEBnbWFpbC5jb20iLCJyb2xlIjoiSW5zdHJ1Y3RvciIsImlhdCI6MTcwNzUyMDM5MywiZXhwIjoxNzA3NTIzOTkzfQ.-mw-5PkaxJ7wa3HjOK6dZV-vDniZaDeSsXpcNN5cASo'
-        }
-    }).then((response) => {
-        console.log(response);
-    }).catch((error) => {
-        console.log(error);
-    });
-};
+ const getAllStudents =()=>{
+  
+  axios.get('https://upskilling-egypt.com:3005/api/student/without-group',{
+    headers:{
+      Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWMyMTcxM2JmYzdmMjc2YTNiYmZkYzAiLCJlbWFpbCI6ImVuZy5mYXRtYS5mYXRlaEBnbWFpbC5jb20iLCJyb2xlIjoiSW5zdHJ1Y3RvciIsImlhdCI6MTcwNzU2MjYyMCwiZXhwIjoxNzA4MTY3NDIwfQ.3OXeUB8k2YvPrAyIsHz38qcgOXqkRWFo5tTWTmPUeho'
+    }
+  }).then((response)=>{
+    console.log(response);
+    
+  }).catch((error)=>{
+    console.log(error);
+    
+  })
+ }
   useEffect(()=>{
     getAllStudents()
   },[])
@@ -106,7 +109,7 @@ export default function Students() {
 
             </AddModal>
           </div>
-          <div className="grid grid-cols-2 gap-4 mt-4 border mx-5 rounded-2xl pr-4 ">
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-4 border mx-5 rounded-2xl pr-4 ">
             {students.map((student, index) => (
               <div key={index} className="flex flex-col ml-4 mt-4">
 
