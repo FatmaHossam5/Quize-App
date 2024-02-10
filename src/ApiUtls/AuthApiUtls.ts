@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../Redux/Slices/AuthSlice/AuthSlice";
 
-
 const baseAuthUrl = `https://upskilling-egypt.com:3005/api/auth`;
 
 const useCustomFetch = () => {
@@ -16,7 +15,6 @@ const useCustomFetch = () => {
 
   const customFetch = (pathUrl: string, data: object, navigateTo: string) => {
     setLoading(true);
-
     axios
       .post(`${baseAuthUrl}/${pathUrl}`, data)
       .then((res) => {
@@ -33,7 +31,6 @@ const useCustomFetch = () => {
   };
 
   return { customFetch, loading };
-
 };
 
 export default useCustomFetch;

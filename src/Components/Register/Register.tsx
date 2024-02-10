@@ -16,7 +16,6 @@ export default function Rigester() {
 
   function onSubmit(data: object) {
     customFetch("/register",data,"/")
-
   }
 
   return (

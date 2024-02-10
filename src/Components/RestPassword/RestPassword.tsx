@@ -18,9 +18,7 @@ export default function RestPassword() {
   function onSubmit(data: Data) {
     //forget password api do not send email
     delete data.cPassword;
-    
     customFetch("/reset-password",data,"/");
-
   }
   
 
