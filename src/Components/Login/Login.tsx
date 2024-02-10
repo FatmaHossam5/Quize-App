@@ -29,7 +29,7 @@ export default function Login() {
 
       <div className="grid grid-cols-2 gap-2 md:grid-cols-3 my-3">
         <Link to="/" className="signin">
-          <div className="content text-8xl xl:text-6xl lg:text-6xl py-3 bg-stone-700rounded-lg text-center bg-stone-700 border-4 border-secondry">
+          <div className="content text-8xl xl:text-6xl lg:text-6xl py-3 rounded-lg text-center bg-stone-700 border-4 border-secondry">
             <i className="fa-solid fa-user text-secondry"></i>
             <p className="text-base mt-2">Sign in</p>
           </div>
@@ -119,4 +119,4 @@ export default function Login() {
     </>
   );
 }
-//
+
