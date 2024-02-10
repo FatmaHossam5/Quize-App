@@ -2,21 +2,26 @@ import React, { useEffect, useState } from 'react'
 import userImg from '../../assets/user img.png'
 import AddModal from '../../Shared/AddModal/AddModal';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 export default function Students() {
+  const {userData}=useSelector((state:any)=>state.userData)
+  let reqHeaders=`Bearer ${userData?.accessToken}`
+  const[students,setStudents]=useState([])
   const Groups = ['Group1', 'Group2', 'Group3']
-  const students = [
-    { id: '1', Name: "Emanual James", Rank: "2nd", Score: "87", img: userImg }
-    , { id: '2', Name: "Alice Jasmine", Rank: "12th", Score: "77", img: userImg }
-    , { id: '3', Name: "Harrison Menlaye", Rank: "3rd", Score: "97", img: userImg },
-    { id: '4', Name: "Jones Doherty", Rank: "5th", Score: "88", img: userImg },
-    { id: '5', Name: "Harrison Menlaye", Rank: "3rd", Score: "97", img: userImg },
-    { id: '6', Name: "Emanual James", Rank: "2nd", Score: "87", img: userImg }
-    , { id: '7', Name: "Alice Jasmine", Rank: "12th", Score: "77", img: userImg }
-    , { id: '8', Name: "Harrison Menlaye", Rank: "3rd", Score: "97", img: userImg },
-    { id: '9', Name: "Jones Doherty", Rank: "5th", Score: "88", img: userImg },
-    { id: '10', Name: "Harrison Menlaye", Rank: "3rd", Score: "97", img: userImg },
-    { id: '10', Name: "Harrison Menlaye", Rank: "3rd", Score: "97", img: userImg },
-  ];
+  // const students = [
+  //   { id: '1', Name: "Emanual James", Rank: "2nd", Score: "87", img: userImg }
+  //   , { id: '2', Name: "Alice Jasmine", Rank: "12th", Score: "77", img: userImg }
+  //   , { id: '3', Name: "Harrison Menlaye", Rank: "3rd", Score: "97", img: userImg },
+  //   { id: '4', Name: "Jones Doherty", Rank: "5th", Score: "88", img: userImg },
+  //   { id: '5', Name: "Harrison Menlaye", Rank: "3rd", Score: "97", img: userImg },
+  //   { id: '6', Name: "Emanual James", Rank: "2nd", Score: "87", img: userImg }
+  //   , { id: '7', Name: "Alice Jasmine", Rank: "12th", Score: "77", img: userImg }
+  //   , { id: '8', Name: "Harrison Menlaye", Rank: "3rd", Score: "97", img: userImg },
+  //   { id: '9', Name: "Jones Doherty", Rank: "5th", Score: "88", img: userImg },
+  //   { id: '10', Name: "Harrison Menlaye", Rank: "3rd", Score: "97", img: userImg },
+  //   { id: '10', Name: "Harrison Menlaye", Rank: "3rd", Score: "97", img: userImg },
+  // ];
  
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,15 +39,15 @@ export default function Students() {
   
  const getAllStudents =()=>{
   
-  axios.get('https://upskilling-egypt.com:3005/api/student/without-group',{
-    headers:{
-      Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWMyMTcxM2JmYzdmMjc2YTNiYmZkYzAiLCJlbWFpbCI6ImVuZy5mYXRtYS5mYXRlaEBnbWFpbC5jb20iLCJyb2xlIjoiSW5zdHJ1Y3RvciIsImlhdCI6MTcwNzU2MjYyMCwiZXhwIjoxNzA4MTY3NDIwfQ.3OXeUB8k2YvPrAyIsHz38qcgOXqkRWFo5tTWTmPUeho'
-    }
-  }).then((response)=>{
-    console.log(response);
-    
+  axios.get('https://upskilling-egypt.com:3005/api/student/without-group',
+  {headers:{Authorization:reqHeaders}}).then((response)=>{
+    console.log(response.data);
+    console.log(userData);
+    setStudents(response.data)
   }).catch((error)=>{
     console.log(error);
+    console.log(userData);
+toast.error(error?.response?.data?.message)
     
   })
  }
@@ -116,11 +121,11 @@ export default function Students() {
 
                 <div key={student.id} className="border rounded-2xl flex justify-between align-items-center">
                   <div className='flex'>
-                    <img src={student.img} alt={student.Name} className="w-16 h-16 mr-4" />
+                    <img src={userImg} alt='userImage' className="w-16 h-16 mr-4" />
                     <div className="mt-2">
-                      <p className="font-semibold mx-2">{student.Name}</p>
-                      <span className='border-r mx-1 px-1'>Rank: {student.Rank}</span>
-                      <span >Score: {student.Score}</span>
+                      <p className="font-semibold mx-2">{student?.first_name} {student?.last_name}</p>
+                      <span className='border-r mx-1 px-1'>Role: {student.role}</span>
+                      <span >Status: {student.status}</span>
                     </div>
                   </div>
                   <div>
