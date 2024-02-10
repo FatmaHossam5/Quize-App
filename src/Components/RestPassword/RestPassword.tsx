@@ -3,7 +3,7 @@ import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
 import AuthButton from "../../Shared/AuthButton/AuthButton";
 import useCustomFetch from "../../ApiUtls/AuthApiUtls";
 import Loading from "../../Shared/Loading/Loading";
-import {Data} from './ResetInterface.ts'
+import {ResetFormInterface} from './ResetInterface.ts'
 
 export default function RestPassword() {
   const {customFetch,loading}=useCustomFetch();
@@ -15,9 +15,9 @@ export default function RestPassword() {
     getValues,
   } = useForm();
 
-  function onSubmit(data: Data) {
+  function onSubmit(data: ResetFormInterface) {
     //forget password api do not send email
-    delete data.cPassword;
+    delete data.confirm_password;
     customFetch("/reset-password",data,"/");
   }
   
@@ -124,14 +124,14 @@ export default function RestPassword() {
           </label>
           <div
             className={`flex rounded-md border-3 ${
-              !errors.cPassword ? "border-white" : "border-red-500"
+              !errors.confirm_password ? "border-white" : "border-red-500"
             }`}
           >
             <span className="flex select-none items-center me-3 pl-3 text-white ">
               <i className="fa-solid fa-key"></i>
             </span>
             <input
-              {...register("cPassword", {
+              {...register("confirm_password", {
                 validate: (value) => {
                   return (
                     value == getValues("password") ||
@@ -144,8 +144,8 @@ export default function RestPassword() {
               className="block px-2  flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
               placeholder="Type your confirm password"
             />
-            {errors.cPassword && (
-              <ErrorMessage>{String(errors.cPassword.message)}</ErrorMessage>
+            {errors.confirm_password && (
+              <ErrorMessage>{String(errors.confirm_password.message)}</ErrorMessage>
             )}
           </div>
         </div>

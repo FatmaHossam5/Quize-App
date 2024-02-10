@@ -22,12 +22,17 @@ const useCustomFetch = () => {
         dispatch(setUserData(res.data.data));
         toast.success(res.data.message);
         navigate(navigateTo);
-        setLoading(false);
+        
       })
       .catch((error) => {
         toast.error(error.response?.data?.message || "Invalid data");
-        setLoading(false);
-      })
+        
+      }).finally(
+        ()=>{
+          setLoading(false);
+setLoading(false);
+        })
+      
   };
 
   return { customFetch, loading };

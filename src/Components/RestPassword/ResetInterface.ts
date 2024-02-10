@@ -1,6 +1,6 @@
-export interface Data{
+export interface ResetFormInterface{
     email:string,
     password:string,
-    cPassword?:string,
+    confirm_password?:string,
     otp:string
   }
