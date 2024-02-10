@@ -2,8 +2,12 @@ import { Link } from "react-router-dom";
 import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
 import { useForm } from "react-hook-form";
 import AuthButton from "../../Shared/AuthButton/AuthButton";
+import useCustomFetch from "../../ApiUtls/AuthApiUtls";
+import Loading from "../../Shared/Loading/Loading";
 
 export default function RequsetResetPass() {
+  const {customFetch,loading}=useCustomFetch();
+  
   const {
     register,
     handleSubmit,
@@ -11,7 +15,7 @@ export default function RequsetResetPass() {
   } = useForm();
 
   function onSubmit(data: object) {
-    console.log(data);
+    customFetch("/forgot-password",data,"/reset-password");
   }
 
   return (
@@ -50,7 +54,7 @@ export default function RequsetResetPass() {
           </div>
         </div>
 
-        <AuthButton>Send email</AuthButton>
+        <AuthButton>{loading?<Loading/>:"Send email"}</AuthButton>
 
         <div className="my-12">
           <p className="text-end">
