@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { Cookies } from "typescript-cookie";
 import { UserData } from "../../Redux/Slices/AuthSlice/Interfaces";
@@ -9,11 +9,6 @@ interface Prop{
   }
 
 export default function ProtectedRoute({userData,children}:Prop) {
-
-    useEffect(() => {
-        console.log(userData);
-        
-    }, [])
     
     if (!Cookies.get("userData") && !userData?.accessToken ) {
         return <Navigate to="/"/>

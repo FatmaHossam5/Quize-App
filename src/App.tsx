@@ -23,8 +23,8 @@ import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 function App() {
   
   let {userData}=useSelector((state:any)=>state.userData);
-
   const dispatch =useDispatch();
+
   useEffect(() => {
     if (!userData) {
       const retrievedDataFromCookie = Cookies.get('userData');
@@ -35,7 +35,6 @@ function App() {
       }
     }
   }, [dispatch, userData]);
-  
   
   const routes = createBrowserRouter([
     {
