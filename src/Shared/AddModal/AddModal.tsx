@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 export default function AddModal({ isOpen, onClose, children, clickedBtn, buttonLabel = "Button",
     width = "auto",
-    height = "auto" }) {
+    height = "auto",
+ }) {
     const [modalOpen, setModalOpen] = useState(isOpen);
 
     useEffect(() => {
