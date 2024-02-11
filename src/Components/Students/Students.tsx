@@ -40,7 +40,7 @@ export default function Students() {
   
  const getAllStudents =()=>{
   
-  axios.get('https://upskilling-egypt.com:3005/api/student/without-group',
+  axios.get('https://upskilling-egypt.com:3005/api/student',
   {headers:{Authorization:reqHeaders}}).then((response)=>{
     console.log(response.data);
     console.log(userData);
