@@ -1,7 +1,7 @@
 export interface AuthState {
     userData:UserData|null;
     isAuthed:boolean,
-    headers:{Authorization:string}
+    headers:{headers:{Authorization:string}}
 }
 
 export interface UserData{
