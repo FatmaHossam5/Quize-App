@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "./Interfaces";
 import { Cookies } from "typescript-cookie";
 
-const initialState: AuthState = { userData: JSON.parse(String(Cookies.get("userData"))),headers:{Authorization:`Bearer ${ JSON.parse(String(Cookies.get("userData"))).refreshToken}`}, isAuthed: false };
+const initialState: AuthState = { userData: JSON.parse(String(Cookies.get("userData"))),headers:{headers:{Authorization:`Bearer ${ JSON.parse(String(Cookies.get("userData"))).accessToken}`}}, isAuthed: false };
 
 const authSlice = createSlice({
 
