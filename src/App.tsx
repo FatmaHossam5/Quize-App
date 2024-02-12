@@ -22,19 +22,11 @@ import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 
 function App() {
   
-  let {userData}=useSelector((state:any)=>state.userData);
-  const dispatch =useDispatch();
+  let {userData,headers}=useSelector((state:any)=>state.userData);
 
-  useEffect(() => {
-    if (!userData) {
-      const retrievedDataFromCookie = Cookies.get('userData');
-      
-      if (typeof retrievedDataFromCookie ==="string") {
-        const convertRetrievedData = JSON.parse(retrievedDataFromCookie);
-        dispatch(setUserData(convertRetrievedData));
-      }
-    }
-  }, [dispatch, userData]);
+
+  console.log(headers);
+  
   
   const routes = createBrowserRouter([
     {
