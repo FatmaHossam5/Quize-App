@@ -1,12 +1,16 @@
+import { useSelector } from "react-redux";
 
 export default function NavBar() {
+  const { userData } = useSelector((state: any) => state.userData)
+  const Name=userData.profile.first_name+userData.profile.last_name
+  const role=userData.profile.role
+  
+  
   return (
     <>
     <div className="flex   ">
-    <div className=" pt-3  text-center  w-1/6 border-r-[1px]">
-      <i  className="fa-solid fa-bars pr-5"></i> <i className="fa-solid fa-circle-check"></i><i   className="fa-solid fa-circle-xmark"></i>
-      </div>
-      <div className=" w-full flex justify-between">
+   
+      <div className=" w-full flex justify-between border-b-2">
       <div><h3 className="font-bold mt-3 ">Dashboard</h3></div>
   
   <div className=" flex gap-x-[45px]   ">
@@ -21,8 +25,8 @@ export default function NavBar() {
     </div>
 
   <div className="mr-[35px] mt-2">
-  <h3>Name</h3>
-  <span className="text-[#C5D86D]">Instructor</span>
+  <h3>{Name}</h3>
+  <span className="text-[#C5D86D]">{role}</span>
   </div>
  
   </div>
