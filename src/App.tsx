@@ -16,6 +16,9 @@ import AuthLayout from "./Shared/AuthLayout/AuthLayout";
 import MasterLayout from "./Shared/MasterLayout/MasterLayout";
 import NotFound from "./Shared/NotFound/NotFound";
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
+import ViewResult from "./Components/ViewResult/ViewResult";
+
+;
 
 function App() {
   
@@ -36,6 +39,8 @@ function App() {
         { path: "student", element: <Students /> },
         { path: "quizzes", element: <Quizzes /> },
         { path: "results", element: <Results /> },
+        { path: "view-results", element: <ViewResult /> },
+
       ],
     },
     {
