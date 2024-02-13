@@ -1,17 +1,19 @@
-import { Link } from "react-router-dom";
-import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { useState } from "react";
+import { Menu, MenuItem, Sidebar } from 'react-pro-sidebar';
+import { Link } from "react-router-dom";
 export default function SideBar() {
-  const [isCollapsed, setisCollapsed] = useState(true);
-  function handelToggel() {
-    setisCollapsed(!isCollapsed);
+  
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  function handleToggle() {
+    setIsCollapsed(!isCollapsed);
   }
   return (
     <>
       <div className="w-full  ">
-        <Sidebar className="h-full" collapsed={isCollapsed}>
+        <Sidebar className="vh-100  " collapsed={isCollapsed}>
           <Menu>
-            <MenuItem icon={<i onClick={handelToggel} className="fa-solid fa-bars "></i>} className="border-b-2 py-1 ">
+            <MenuItem  onClick={handleToggle} icon={<i className="fa-solid fa-bars "></i>} className="border-b-2 py-1 ">
               <i className="fa-solid fa-circle-check"></i>
               <i className="fa-solid fa-circle-xmark"></i>
             </MenuItem>
@@ -27,10 +29,10 @@ export default function SideBar() {
             <MenuItem className=" border-b-2 py-2  hover:border-r-2 hover:border-r-black" icon={<i className="fa-solid fa-chalkboard-user fa-xl  "></i>} component={<Link to='/dashboard/quizzes'></Link>}>
               Quizzes
             </MenuItem>
-            <MenuItem className=" border-b-2 py-32  hover:border-r-2 hover:border-r-black" icon={<i className="fa-solid fa-file-circle-check fa-xl"></i>} component={<Link to='/dashboard/quizzes'></Link>}>
+            <MenuItem className=" border-b-2 py-16  hover:border-r-2 hover:border-r-black" icon={<i className="fa-solid fa-file-circle-check fa-xl"></i>} component={<Link to='/dashboard/results'></Link>}>
               Results
             </MenuItem>
-            <MenuItem className=" border-b-2 py-2  hover:border-r-2 hover:border-r-black">
+            <MenuItem className=" border-b-2 py-1  hover:border-r-2 hover:border-r-black">
      
                 <i className="fa-solid fa-circle-question fa-xl pr-2"></i>
                 Help

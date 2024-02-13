@@ -8,8 +8,12 @@ export default function MasterLayout() {
 
 
 <div className=" flex">
+ 
   <div className="w-auto"> 
-    <SideBar/> </div>
+  <div className="position-sticky z-50 bg-blue-600 top-0">
+    <SideBar/>
+    </div>
+     </div>
   <div className="w-[100%]">
   <NavBar/> 
   <Outlet/>

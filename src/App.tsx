@@ -1,23 +1,20 @@
+import { useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import "./App.css";
 import { ToastContainer } from "react-toastify";
-import MasterLayout from "./Shared/MasterLayout/MasterLayout";
-import NotFound from "./Shared/NotFound/NotFound";
-import Home from "./Components/Home/Home";
+import "./App.css";
+import ChangePassword from "./Components/ChangePassword/ChangePassword";
 import Groups from "./Components/Groups/Groups";
-import Students from "./Components/Students/Students";
-import Quizzes from "./Components/Quizzes/Quizzes";
-import Results from "./Components/Results/Results";
-import AuthLayout from "./Shared/AuthLayout/AuthLayout";
+import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
+import Quizzes from "./Components/Quizzes/Quizzes";
 import Rigester from "./Components/Register/Register";
 import RequsetResetPass from "./Components/RequsetResetPass/RequsetResetPass";
 import RestPassword from "./Components/RestPassword/RestPassword";
-import ChangePassword from "./Components/ChangePassword/ChangePassword";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { setUserData } from "./Redux/Slices/AuthSlice/AuthSlice";
-import { Cookies } from "typescript-cookie";
+import Results from "./Components/Results/Results";
+import Students from "./Components/Students/Students";
+import AuthLayout from "./Shared/AuthLayout/AuthLayout";
+import MasterLayout from "./Shared/MasterLayout/MasterLayout";
+import NotFound from "./Shared/NotFound/NotFound";
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 
 function App() {

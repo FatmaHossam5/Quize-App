@@ -1,9 +1,11 @@
 
 
+import { useSelector } from 'react-redux';
 import desk from '../../assets/Quiz img (1).png'
 import group from '../../assets/img (1).png'
 import userImg from '../../assets/user img.png'
 export default function Home() {
+ 
   const students=[
     {id:'1',Name:"Emanual James",Rank:"2nd",Score:"87"}
   ,{id:'2',Name:"Alice Jasmine",Rank:"12th",Score:"77"}
@@ -27,7 +29,7 @@ export default function Home() {
   <div key={id} className=' m-4' >
             <div className='border rounded-xl '>
               <div className='flex '>
-                <img src={exam.img} className='w-2/12' alt="" />
+                <img src={exam.img} className='w-1/5' alt="" />
            
                 <div className=' ml-2 mt-4 w-5/6'>
                   <h3>{exam.ExamName}</h3>
