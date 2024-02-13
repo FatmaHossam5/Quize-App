@@ -26,6 +26,7 @@
     "react-social-login-buttons": "^3.9.1",
     "react-toastify": "^10.0.4",
     "reactjs-social-login": "^2.6.3",
+    "tw-elements-react": "^1.0.0-alpha2",
     "typescript-cookie": "^1.0.6"
   },
   "devDependencies": {

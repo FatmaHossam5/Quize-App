@@ -19,9 +19,9 @@ export default function Home() {
   ]
   return (
     <>
-      <div className="flex  ">
+      <div className=" grid lg:grid-cols-2 grid-cols-1  ">
         {/* EXAMS */}
-        <div className="border w-2/3 mt-2 mx-2 rounded-xl">
+        <div className="border  mt-2 mx-2 rounded-xl">
           <h3 className="pl-3">   Upcoming 5 quizzes </h3>
 {exams.map((exam,id)=><>
   <div key={id} className=' m-4' >
@@ -57,7 +57,7 @@ export default function Home() {
   
         </div>
         {/*STUDENTS*/}
-        <div className="border w-1/3 mt-2 mr-3 rounded-xl">
+        <div className="border  mt-2 mr-3 rounded-xl">
           <h3 className="pl-3">   Top 5 Students </h3>
           {students.map((student,id)=><>
             <div key={id} className=" my-4 ml-1 ">
