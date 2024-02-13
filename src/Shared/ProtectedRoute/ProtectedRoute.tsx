@@ -10,7 +10,7 @@ interface Prop{
 
 export default function ProtectedRoute({userData,children}:Prop) {
     
-    if (!Cookies.get("userData") && !userData?.accessToken ) {
+    if (!userData?.accessToken ) {
         return <Navigate to="/"/>
     }else{
         return children
