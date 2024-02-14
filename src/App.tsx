@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { setUserData } from "./Redux/Slices/AuthSlice/AuthSlice";
 import { Cookies } from "typescript-cookie";
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
+import Questions from "./Components/Questions/Questions";
 
 function App() {
   
@@ -40,13 +41,14 @@ function App() {
     {
       path: "dashboard",
       element: <ProtectedRoute userData={userData}><MasterLayout /></ProtectedRoute>,
-      errorElement: <NotFound />,
+             errorElement: <NotFound />,
       children: [
         { index: true, element: <Home /> },
         { path: "groups", element: <Groups /> },
         { path: "student", element: <Students /> },
         { path: "quizzes", element: <Quizzes /> },
         { path: "results", element: <Results /> },
+        { path: "questions", element: <Questions /> },
       ],
     },
     {

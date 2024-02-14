@@ -2,13 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "./Interfaces";
 import { Cookies } from "typescript-cookie";
 
-const initialState: AuthState = { userData: null, isAuthed: false };
+const initialState: AuthState = { userData: Cookies.get("userData")?JSON.parse(String(Cookies.get("userData"))):null,
+                                 headers:{headers:{Authorization: `Bearer ${Cookies.get("userData")?JSON.parse(String(Cookies.get("userData"))).accessToken:null}`}},
+                                 isAuthed: false };
 
 const authSlice = createSlice({
-
   name: "auth",
   initialState,
-
   reducers: {
     setUserData: (state, action) => {
       state.userData =action.payload
@@ -21,6 +21,7 @@ const authSlice = createSlice({
     logOut: (state) => {
       state.userData = null;
       state.isAuthed = false;
+      state.headers={headers:{Authorization:""}};
       Cookies.remove("userData",{})
     },
   },
