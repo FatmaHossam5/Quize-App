@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { baseUrl } from "./ApiUtls";
@@ -18,9 +18,6 @@ const useFetchData = () => {
         toast.error(error.response.data.message || "Invalid Data");
       });
   };
-  useEffect(() => {
-    getData("student");
-  }, []);
   return { students, getData };
 };
 export default useFetchData;

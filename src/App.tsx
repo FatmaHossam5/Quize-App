@@ -17,10 +17,18 @@ import MasterLayout from "./Shared/MasterLayout/MasterLayout";
 import NotFound from "./Shared/NotFound/NotFound";
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 import SpacificQuiz from "./Components/Quizzes/SpacificQuiz/SpacificQuiz";
+import { useEffect } from "react";
 
 function App() {
   
-  let {userData}=useSelector((state:any)=>state.userData);
+  let {headers,userData}=useSelector((state:any)=>state.userData);
+  useEffect(() => {
+    console.log(headers);
+    console.log(userData);
+    
+  }, [userData])
+  
+
   
   const routes = createBrowserRouter([
     {
