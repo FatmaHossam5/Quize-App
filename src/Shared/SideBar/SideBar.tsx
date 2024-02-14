@@ -11,11 +11,10 @@ export default function SideBar() {
   return (
     <>
       <div className="w-full  ">
-        <Sidebar className="vh-100  " collapsed={isCollapsed}>
-          <Menu>
-            <MenuItem  onClick={handleToggle} icon={<i className="fa-solid fa-bars "></i>} className="border-b-2 py-1 ">
-              <i className="fa-solid fa-circle-check"></i>
-              <i className="fa-solid fa-circle-xmark"></i>
+        <Sidebar className="vh-100" collapsed={isCollapsed}>
+          <Menu >
+            <MenuItem  onClick={handleToggle} icon={ <i className="fa-solid fa-circle-check"><i className="fa-solid fa-circle-xmark"></i></i>} className="border-b-2 py-1 ">
+             
             </MenuItem>
             <MenuItem className=" border-b-2 py-2 hover:border-r-2 hover:border-r-black " icon={<i className="fa-solid fa-house fa-xl   "></i>} component={<Link to='/dashboard'></Link>}>
               Dashboard
