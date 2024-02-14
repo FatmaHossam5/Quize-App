@@ -1,6 +1,46 @@
 import { Link } from "react-router-dom";
 
 export default function Results() {
+  const DataTable=[{
+    title:"Assembly Language",
+    GroupNum:'1',
+    persons:'23 Persons',
+    participants:"20 Participants",
+    Data:"05/11/2024"
+  },
+  {
+    title:"Assembly Language",
+    GroupNum:'1',
+    persons:'23 Persons',
+    participants:"20 Participants",
+    Data:"05/11/2024"
+  },
+  {
+    title:"Assembly Language",
+    GroupNum:'1',
+    persons:'23 Persons',
+    participants:"20 Participants",
+    Data:"05/11/2024"
+  },{
+    title:"Assembly Language",
+    GroupNum:'1',
+    persons:'23 Persons',
+    participants:"20 Participants",
+    Data:"05/11/2024"
+  },{
+    title:"Assembly Language",
+    GroupNum:'1',
+    persons:'23 Persons',
+    participants:"20 Participants",
+    Data:"05/11/2024"
+  },{
+    title:"Assembly Language",
+    GroupNum:'1',
+    persons:'23 Persons',
+    participants:"20 Participants",
+    Data:"05/11/2024"
+  }
+]
   return (
     <>
 
@@ -20,7 +60,7 @@ export default function Results() {
                     <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-50">
                       Title
                     </th>
-                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-50">
+                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-50 ">
                       Group name
                     </th>
                     <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-50">
@@ -40,76 +80,24 @@ export default function Results() {
                 </thead>
 
                 <tbody className="divide-y divide-gray-200">
-                  <tr>
-                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                      John Doe
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      24/05/1995
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      Web Developer
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      student
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      $120,000
-                    </td>
-                    <td>
-                      <Link to='/dashboard/view-results'>
+                  {DataTable.map((data,index)=>
+                  <tr key={index}>
+                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{data.title}</td>
+                <td className="whitespace-nowrap px-12 py-2 text-gray-700 ">{data.GroupNum}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{data.persons}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{data.participants}</td>
+                <td>
+                  <Link to ='/dashboard/results/Assembly Language	'>
                       <button className="border-0 mx-3 bg-secondry rounded-xl px-3">
                         View
                       </button>
                       </Link>
                     </td>
-                  </tr>
 
-                  <tr>
-                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                      Jane Doe
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      04/11/1980
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      Web Designer
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      student
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      $100,000
-                    </td>
-                    <td>
-                      <button className="border-0 mx-3 bg-secondry rounded-xl px-3">
-                        View
-                      </button>
-                    </td>
-                  </tr>
 
-                  <tr>
-                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                      Gary Barlow
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      24/05/1995
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      Singer
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      student
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      $20,000
-                    </td>
-                    <td>
-                      <button className="border-0 mx-3 bg-secondry rounded-xl px-3">
-                        View
-                      </button>
-                    </td>
                   </tr>
+)}
+                 
                 </tbody>
               </table>
             </div>

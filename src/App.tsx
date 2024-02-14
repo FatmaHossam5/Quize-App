@@ -39,7 +39,7 @@ function App() {
         { path: "student", element: <Students /> },
         { path: "quizzes", element: <Quizzes /> },
         { path: "results", element: <Results /> },
-        { path: "view-results", element: <ViewResult /> },
+        { path: "results/:viewResults", element: <ViewResult /> },
 
       ],
     },
