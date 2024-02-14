@@ -29,8 +29,11 @@ export default function SideBar() {
             <MenuItem className=" border-b-2 py-2  hover:border-r-2 hover:border-r-black" icon={<i className="fa-solid fa-chalkboard-user fa-xl  "></i>} component={<Link to='/dashboard/quizzes'></Link>}>
               Quizzes
             </MenuItem>
-            <MenuItem className=" border-b-2 py-16  hover:border-r-2 hover:border-r-black" icon={<i className="fa-solid fa-file-circle-check fa-xl"></i>} component={<Link to='/dashboard/results'></Link>}>
+            <MenuItem className=" border-b-2 py-10  hover:border-r-2 hover:border-r-black" icon={<i className="fa-solid fa-file-circle-check fa-xl"></i>} component={<Link to='/dashboard/results'></Link>}>
               Results
+            </MenuItem>
+            <MenuItem className=" border-b-2 py-2  hover:border-r-2 hover:border-r-black" icon={<i className="fa-solid fa-lock"></i>} component={<Link to='/change-password'></Link>}>
+             Change Password
             </MenuItem>
             <MenuItem className=" border-b-2 py-1  hover:border-r-2 hover:border-r-black">
      
