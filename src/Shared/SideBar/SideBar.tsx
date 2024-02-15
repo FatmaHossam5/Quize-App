@@ -11,11 +11,10 @@ export default function SideBar() {
   return (
     <>
       <div className="w-full  ">
-        <Sidebar className="vh-100  " collapsed={isCollapsed}>
-          <Menu>
-            <MenuItem  onClick={handleToggle} icon={<i className="fa-solid fa-bars "></i>} className="border-b-2 py-1 ">
-              <i className="fa-solid fa-circle-check"></i>
-              <i className="fa-solid fa-circle-xmark"></i>
+        <Sidebar className="vh-100" collapsed={isCollapsed}>
+          <Menu >
+            <MenuItem  onClick={handleToggle} icon={ <i className="fa-solid fa-circle-check"><i className="fa-solid fa-circle-xmark"></i></i>} className="border-b-2 py-1 ">
+             
             </MenuItem>
             <MenuItem className=" border-b-2 py-2 hover:border-r-2 hover:border-r-black " icon={<i className="fa-solid fa-house fa-xl   "></i>} component={<Link to='/dashboard'></Link>}>
               Dashboard
@@ -29,8 +28,11 @@ export default function SideBar() {
             <MenuItem className=" border-b-2 py-2  hover:border-r-2 hover:border-r-black" icon={<i className="fa-solid fa-chalkboard-user fa-xl  "></i>} component={<Link to='/dashboard/quizzes'></Link>}>
               Quizzes
             </MenuItem>
-            <MenuItem className=" border-b-2 py-16  hover:border-r-2 hover:border-r-black" icon={<i className="fa-solid fa-file-circle-check fa-xl"></i>} component={<Link to='/dashboard/results'></Link>}>
+            <MenuItem className=" border-b-2 py-10  hover:border-r-2 hover:border-r-black" icon={<i className="fa-solid fa-file-circle-check fa-xl"></i>} component={<Link to='/dashboard/results'></Link>}>
               Results
+            </MenuItem>
+            <MenuItem className=" border-b-2 py-2  hover:border-r-2 hover:border-r-black" icon={<i className="fa-solid fa-lock"></i>} component={<Link to='/change-password'></Link>}>
+             Change Password
             </MenuItem>
             <MenuItem className=" border-b-2 py-1  hover:border-r-2 hover:border-r-black">
      

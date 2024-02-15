@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import { Cookies } from "typescript-cookie";
 import { UserData } from "../../Redux/Slices/AuthSlice/Interfaces";
 
 interface Prop{
@@ -10,8 +9,8 @@ interface Prop{
 
 export default function ProtectedRoute({userData,children}:Prop) {
     
-    if (!Cookies.get("userData") && !userData?.accessToken ) {
-        return <Navigate to="/"/>
+    if (!userData?.accessToken ) {
+        return <Navigate to="/login"/>
     }else{
         return children
     }

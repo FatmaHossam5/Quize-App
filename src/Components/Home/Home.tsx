@@ -1,9 +1,8 @@
 
 
-import { useSelector } from 'react-redux';
-import desk from '../../assets/Quiz img (1).png'
-import group from '../../assets/img (1).png'
-import userImg from '../../assets/user img.png'
+import desk from '../../assets/Quiz img (1).png';
+import group from '../../assets/img (1).png';
+import userImg from '../../assets/user img.png';
 export default function Home() {
  
   const students=[
@@ -25,8 +24,8 @@ export default function Home() {
         {/* EXAMS */}
         <div className="border  mt-2 mx-2 rounded-xl">
           <h3 className="pl-3">   Upcoming 5 quizzes </h3>
-{exams.map((exam,id)=><>
-  <div key={id} className=' m-4' >
+{exams.map((exam,idx)=><div key={idx}>
+  <div className=' m-4' >
             <div className='border rounded-xl '>
               <div className='flex '>
                 <img src={exam.img} className='w-1/5' alt="" />
@@ -51,7 +50,7 @@ export default function Home() {
 
             </div>
           </div>
-</>)}
+</div>)}
 
   
 
@@ -61,8 +60,8 @@ export default function Home() {
         {/*STUDENTS*/}
         <div className="border  mt-2 mr-3 rounded-xl">
           <h3 className="pl-3">   Top 5 Students </h3>
-          {students.map((student,id)=><>
-            <div key={id} className=" my-4 ml-1 ">
+          {students.map((student,id)=><div key={id}>
+            <div className=" my-4 ml-1 ">
             <div className='border rounded-xl '>
               <div className='flex '>
                 <img src={userImg} className='w-2/12' alt="" />
@@ -85,7 +84,7 @@ export default function Home() {
 
             </div>
           </div>
-          </>)}
+          </div>)}
        
     
 

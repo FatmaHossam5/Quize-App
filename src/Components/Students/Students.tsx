@@ -10,7 +10,6 @@ import trash from '../../assets/Email (1).png';
 import userImg from '../../assets/user img.png';
 
 export default function Students() {
-
   const { headers } = useSelector((state: any) => state.userData)
   const { getData, students } = useFetchData()
   const [modalAction, setModalAction] = useState('close');
@@ -25,7 +24,6 @@ export default function Students() {
   };
   //handle Close Modal
   const closeModal = () => setModalAction('close');
-
   //handle Delete Function
   const handleDelete = () => {
     if (!studentId) return;
@@ -38,7 +36,6 @@ export default function Students() {
 
     })
   }
-
   // handle Onclick Function of Add/Delete
   const saveChanges = () => {
     if (modalAction === 'add') {
@@ -48,30 +45,20 @@ export default function Students() {
     }
     closeModal()
   };
-
-
   // handle Group
   const getGroups = () => {
-
     axios.get(`${baseUrl}/group`, headers).then((response) => {
       const groupSet = new Set(response.data.map(groupName => groupName?.name))
       setGroup([...groupSet])
     }).catch((error) => {
- 
       toast.error(error.response.data.message || 'Invalid Data')
-
     })
   }
-
-
-
+//invoke functions to get data
   useEffect(() => {
     getData('student');
-    getGroups()
-
-
+    getGroups();
   }, [])
-
 
   return (
     <>
@@ -99,7 +86,6 @@ export default function Students() {
             <div>
               <SharedModal
                 show={modalAction === 'add'}
-
                 title="Add New Student"
                 onSave={saveChanges}
                 onClose={closeModal}
@@ -172,9 +158,7 @@ export default function Students() {
 
 
             </div> : <div className=' text-6xl h-[50%] w-full  flex items-center justify-center py-5'><Loading /></div>}
-
             {/*Delete  Student Modal*/}
-
             <SharedModal
               show={modalAction === 'delete'}
               title="Delete Student"
