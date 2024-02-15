@@ -1,13 +1,11 @@
-
 import React, { ReactNode } from 'react'
 interface SharedModalProps {
-  show: boolean;
-
+  show?: boolean;
   title: string;
   body: ReactNode;
   onClose: () => void;
   onSave: () => void;
-
+  omitHeader?:boolean
 }
 
 const SharedModal: React.FC<SharedModalProps> = ({
@@ -16,30 +14,29 @@ const SharedModal: React.FC<SharedModalProps> = ({
   body,
   onClose,
   onSave,
-
-
+  omitHeader
 }) => {
   return (
     <div className={`fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50  ${show ? 'flex justify-center items-center' : 'hidden'}`}>
-      <div className='bg-white md:w-[50%] w-[90%]  h-auto  rounded-lg' show={show} >
-        <div className='header flex justify-between border-b-2 '>
+      <div className='bg-white min-w-[40%] max-w-[90%] h-auto rounded-lg'>
+        <div className={`header flex justify-between border-b-2 ${omitHeader?"hidden":"inline"}`} >
           <div className='headerName mt-3 ml-2 text-xl font-semibold'>{title}</div>
-          <div >
+          <div className='Icons-close-save'>
             <button
-              className="border-l-2 p-3   "
+              className={`border-l-2 p-3`}
               onClick={onSave}
             >
               <i className="fa-solid fa-check"></i>
             </button>
-
             <button
-              className="  border-l-2 p-3  "
+              className="border-l-2 p-3 text-red-500"
               aria-label="Close"
               onClick={onClose}
             >
               <i className="fa-solid fa-xmark"></i>
             </button>
           </div>
+
         </div>
         <div className='py-4'>
           {body}

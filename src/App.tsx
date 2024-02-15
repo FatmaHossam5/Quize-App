@@ -16,15 +16,18 @@ import AuthLayout from "./Shared/AuthLayout/AuthLayout";
 import MasterLayout from "./Shared/MasterLayout/MasterLayout";
 import NotFound from "./Shared/NotFound/NotFound";
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
-import Questions from "./Components/Questions/Questions";
-
+import SpacificQuiz from "./Components/Quizzes/SpacificQuiz/SpacificQuiz";
+import { useEffect } from "react";
 function App() {
   
-  let {userData,headers}=useSelector((state:any)=>state.userData);
-
-
-  console.log(headers);
+  let {headers,userData}=useSelector((state:any)=>state.userData);
+  useEffect(() => {
+    console.log(headers);
+    console.log(userData);
+    
+  }, [userData])
   
+
   
   const routes = createBrowserRouter([
     {
@@ -36,6 +39,7 @@ function App() {
         { path: "groups", element: <Groups /> },
         { path: "student", element: <Students /> },
         { path: "quizzes", element: <Quizzes /> },
+        {path:":quizName",element:<SpacificQuiz/>},
         { path: "results", element: <Results /> },
         { path: "questions", element: <Questions /> },
       ],
