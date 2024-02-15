@@ -16,8 +16,11 @@ import AuthLayout from "./Shared/AuthLayout/AuthLayout";
 import MasterLayout from "./Shared/MasterLayout/MasterLayout";
 import NotFound from "./Shared/NotFound/NotFound";
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
+
+import ViewResult from "./Components/ViewResult/ViewResult";
 import SpacificQuiz from "./Components/Quizzes/SpacificQuiz/SpacificQuiz";
 import { useEffect } from "react";
+
 
 function App() {
   
@@ -42,6 +45,8 @@ function App() {
         { path: "quizzes", element: <Quizzes /> },
         {path:":quizName",element:<SpacificQuiz/>},
         { path: "results", element: <Results /> },
+        { path: "results/:viewResults", element: <ViewResult /> },
+
       ],
     },
     {
