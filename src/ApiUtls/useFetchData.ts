@@ -5,19 +5,19 @@ import { toast } from "react-toastify";
 import { baseUrl } from "./ApiUtls";
 
 const useFetchData = () => {
-  const [students, setStudents] = useState([]);
+  const [fetchedData, setFetchedData] = useState([]);
   const { headers } = useSelector((state: any) => state.userData);
 
   const getData = (path: string) => {
     axios
       .get(`${baseUrl}/${path}`, headers)
       .then((response) => {
-        setStudents(response.data);
+        setFetchedData(response.data);
       })
       .catch((error) => {
         toast.error(error.response.data.message || "Invalid Data");
       });
   };
-  return { students, getData };
+  return { fetchedData, getData };
 };
 export default useFetchData;

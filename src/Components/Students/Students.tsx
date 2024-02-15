@@ -17,7 +17,7 @@ interface Student {
 }
 export default function Students(): Student {
   const { headers } = useSelector((state: any) => state.userData)
-  const { getData, students } = useFetchData()
+  const { getData, fetchedData:students } = useFetchData()
   const [modalAction, setModalAction] = useState('close');
   const [studentId, setStudentId] = useState('')
   const [groups, setGroup] = useState(new Array)
