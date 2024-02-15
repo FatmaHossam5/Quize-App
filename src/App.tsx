@@ -20,8 +20,6 @@ import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 import ViewResult from "./Components/ViewResult/ViewResult";
 import SpacificQuiz from "./Components/Quizzes/SpacificQuiz/SpacificQuiz";
 import { useEffect } from "react";
-
-
 function App() {
   
   let {headers,userData}=useSelector((state:any)=>state.userData);
@@ -37,7 +35,7 @@ function App() {
     {
       path: "dashboard",
       element: <ProtectedRoute userData={userData}><MasterLayout /></ProtectedRoute>,
-      errorElement: <NotFound />,
+             errorElement: <NotFound />,
       children: [
         { index: true, element: <Home /> },
         { path: "groups", element: <Groups /> },
@@ -45,6 +43,7 @@ function App() {
         { path: "quizzes", element: <Quizzes /> },
         {path:":quizName",element:<SpacificQuiz/>},
         { path: "results", element: <Results /> },
+        { path: "questions", element: <Questions /> },
         { path: "results/:viewResults", element: <ViewResult /> },
 
       ],
