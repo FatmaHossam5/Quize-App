@@ -26,7 +26,7 @@ export default function Quizzes() {
   return (
     <>
       <div className="grid lg:grid-cols-2 grid-cols-1">
-        <div className="newQuiz-Bank p-3 ">
+        <div className="newQuiz-Bank sm:p-3 ">
           <div className="flex">
             <button
               onClick={showAddModal}
@@ -35,7 +35,6 @@ export default function Quizzes() {
               <i className="fa-solid text-zinc-600 text-6xl fa-file-circle-plus my-2"></i>
               <p className="text-lg font-semibold ">Set up a new quiz</p>
             </button>
-
             <button className="new-quiz text-center border rounded-xl py-4 px-5 mx-3">
               <i className="fa-solid text-zinc-600 text-6xl fa-building-columns my-2"></i>
               <p className="text-lg font-semibold ">Question Bank</p>
@@ -219,7 +218,7 @@ export default function Quizzes() {
       />
 
       <SharedModal
-        show={modalState === "adda"}
+        show={modalState === "add1"}
         title=""
         onSave={() => {
           console.log("hello");
