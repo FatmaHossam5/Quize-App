@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 
-export default function CompletedQuiz() {
+export default function CompletedQuizzes() {
   return (
     <div className="completed-quizzes px-3 w-full">
       <div className="border rounded-xl">
-        <div className="header flex justify-between">
-          <h5 className="text-lg font-semibold my-2 mx-2">Completed Quizzes</h5>
-          <Link to="/dashboard/results" className="border-0 mx-3">
+        <div className="header flex justify-between pt-2">
+          <h5 className="text-lg font-semibold mx-2">Completed Quizzes</h5>
+          <Link to="/dashboard/results"  className="border-1 hover:text-gray-50 hover:bg-zinc-900 duration-500 px-2 py-1 rounded-xl font-medium text-sm mx-3">
             reuslts{" "}
             <i className="fa-solid fa-arrow-right font-bold text-secondry"></i>
           </Link>

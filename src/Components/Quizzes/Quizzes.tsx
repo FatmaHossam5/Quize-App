@@ -2,8 +2,8 @@ import { useRef, useState } from "react";
 import SharedModal from "../../Shared/AddModal/AddModal";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
-import CompletedQuiz from "../CompletedQuiz/CompletedQuiz";
-import UpComingQuiz from "../UpComingQuiz/UpComingQuiz";
+import CompletedQuizzes from "../CompletedQuizzes/CompletedQuizzes";
+import UpcomingQuizes from "../UpcomingQuizes/UpcomingQuizes";
 export default function Quizzes() {
   const codeRef = useRef<HTMLInputElement>(null);
   const [modalState, setModalState] = useState("close");
@@ -44,20 +44,20 @@ export default function Quizzes() {
         </div>
 
         <div className="upComingQuiz-Completed">
-          <UpComingQuiz />
-          <CompletedQuiz />
+          <UpcomingQuizes />
+          <CompletedQuizzes />
         </div>
       </div>
 
       <SharedModal
-        show={modalState === "add-quiz"}
+        show={modalState === "add"}
         title="Set up a new quiz"
         onSave={() => {
           console.log("hello");
         }}
         onClose={handleClose}
         body={
-          <div className="px-8">
+          <div className="px-6">
             <h3 className="font-semibold text-lg">Details</h3>
             <div className="title mt-2 flex rounded-xl">
               <label
@@ -162,7 +162,7 @@ export default function Quizzes() {
             </div>
 
             <div className="selects pb-12 pt-2">
-              <div className="details grid grid-cols-2 lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 ">
+              <div className="details grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 ">
                 <div className="mt-3 mr-2 flex rounded-xl">
                   <label
                     htmlFor="difficulty"
@@ -219,11 +219,12 @@ export default function Quizzes() {
       />
 
       <SharedModal
-        show={modalState === "add"}
+        show={modalState === "adda"}
         title=""
         onSave={() => {
           console.log("hello");
         }}
+        omitHeader={true}
         onClose={handleClose}
         body={
           <div className="px-8">
@@ -251,7 +252,7 @@ export default function Quizzes() {
                     <i className="fa-solid fa-copy "></i>
                   </button>
                 </div>
-                <button className="bg-secondry px-8 rounded-2xl mt-8">
+                <button onClick={handleClose} className="bg-secondry px-8 rounded-2xl mt-8">
                   Close
                 </button>
               </div>

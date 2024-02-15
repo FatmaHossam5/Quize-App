@@ -5,6 +5,7 @@ interface SharedModalProps {
   body: ReactNode;
   onClose: () => void;
   onSave: () => void;
+  omitHeader?:boolean
 }
 
 const SharedModal: React.FC<SharedModalProps> = ({
@@ -13,16 +14,16 @@ const SharedModal: React.FC<SharedModalProps> = ({
   body,
   onClose,
   onSave,
-
+  omitHeader
 }) => {
   return (
     <div className={`fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50  ${show ? 'flex justify-center items-center' : 'hidden'}`}>
-      <div className='bg-white md:w-[58%] w-[90%]  h-auto  rounded-lg'  >
-        <div className='header flex justify-between border-b-2 '>
+      <div className='bg-white min-w-[40%] max-w-[90%] h-auto rounded-lg'>
+        <div className={`header flex justify-between border-b-2 ${omitHeader?"hidden":"inline"}`} >
           <div className='headerName mt-3 ml-2 text-xl font-semibold'>{title}</div>
           <div className='Icons-close-save'>
             <button
-              className="border-l-2 p-3"
+              className={`border-l-2 p-3`}
               onClick={onSave}
             >
               <i className="fa-solid fa-check"></i>
