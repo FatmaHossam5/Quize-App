@@ -4,6 +4,7 @@ import { logOut } from "../../Redux/Slices/AuthSlice/AuthSlice";
 import { useState } from "react";
 
 export default function NavBar() {
+
   const dispatch = useDispatch();
   const [dropDownMenuState, setdropDownMenuState] = useState(false);
   const { userData } = useSelector((state: any) => state.userData);
@@ -12,6 +13,8 @@ export default function NavBar() {
   const handleDropDownState = () => {
     setdropDownMenuState(!dropDownMenuState);
   };
+
+
 
   return (
     <>
