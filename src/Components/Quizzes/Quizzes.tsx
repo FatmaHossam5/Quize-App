@@ -4,6 +4,7 @@ import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import CompletedQuizzes from "../CompletedQuizzes/CompletedQuizzes";
 import UpcomingQuizes from "../UpcomingQuizes/UpcomingQuizes";
+import Input from "../../Shared/Input/Input";
 export default function Quizzes() {
   const codeRef = useRef<HTMLInputElement>(null);
   const [modalState, setModalState] = useState("close");
@@ -59,19 +60,7 @@ export default function Quizzes() {
         body={
           <div className="px-6">
             <h3 className="font-semibold text-lg">Details</h3>
-            <div className="title mt-2 flex rounded-xl">
-              <label
-                htmlFor="title"
-                className="bg-authImage px-4 py-1 font-semibold rounded-l-xl"
-              >
-                Title:
-              </label>
-              <input
-                id="title"
-                className="w-full border-2 px-1 rounded-r-xl"
-                type="text"
-              />
-            </div>
+        <Input title='Title'/>
 
             <div className="details grid grid-cols-2 lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 justify-between">
               <div className="mt-3 mr-2 flex rounded-xl">
