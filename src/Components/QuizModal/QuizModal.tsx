@@ -1,9 +1,33 @@
+import { useEffect, useState } from "react";
+import { getData } from "../../ApiUtls/ApiUtls";
+import { useSelector } from "react-redux";
+import Loading from "../../Shared/Loading/Loading";
+
+interface Group{
+  students:[string];
+  status:string;
+  name:string;
+  max_students:string;
+  instructor:string;
+  _id:string;
+}
 
 export default function QuizModal() {
+    const durationAndQuestionNumber:number[]=[10,15,20,25,30,35,40,45,50,55,60];
+    const score_per_question:number[]=[1,2,3,4,5,6,7,8,9,10];
+    const category:string[]=["FE","BE","Mobile application","Flutter","AI"];
+    const { headers } = useSelector((state: any) => state.userData);
+    const [groups, setGroups] = useState<Group[]>();
+    useEffect(() => {
+      getData({path:"group",headers,setState:setGroups})
+      
+      
+    }, [])
     
 
   return (
-    <div className="px-6">
+<>
+{groups?    <div className="px-6">
     <h3 className="font-semibold text-lg">Details</h3>
     <div className="title mt-2 flex rounded-xl">
       <label
@@ -22,7 +46,7 @@ export default function QuizModal() {
     <div className="details grid grid-cols-2 lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 justify-between">
       <div className="mt-3 mr-2 flex rounded-xl">
         <label
-          htmlFor="duration"
+          htmlFor="durationAndQuestionNumber"
           className="bg-authImage px-4 py-1 font-semibold rounded-l-xl"
         >
           Duration
@@ -30,42 +54,42 @@ export default function QuizModal() {
         </label>
         <select
           className="border-2 font-bold px-3 rounded-r-xl focus:border-gray-300"
-          id="duration"
+          id="durationAndQuestionNumber"
         >
-            {[10,15,20,25,30,35,40,45,50,55,60].map(i=><option value={i}>{i}</option>)}
+            {durationAndQuestionNumber.map((i,idx)=><option key={idx} value={i}>{i}</option>)}
         </select>
       </div>
 
       <div className="mt-3 mr-2 flex rounded-xl">
         <label
-          htmlFor="question_numbers"
+          htmlFor="durationAndQuestionNumber"
           className="bg-authImage px-4 py-1 font-semibold rounded-l-xl"
         >
           No. of questions
         </label>
         <select
           className="border-2 font-bold px-3 rounded-r-xl focus:border-gray-300"
-          id="question_numbers"
+          id="durationAndQuestionNumber"
         >
-            {[10,15,20,25,30,35,40,45,50].map(i=><option value={i}>{i}</option>)}
+            {durationAndQuestionNumber.map((i,idx)=><option key={idx} value={i}>{i}</option>)}
         </select>
       </div>
 
       <div className="mt-3  flex rounded-xl">
         <label
-          htmlFor="score"
+          htmlFor="score_per_question"
           className="bg-authImage px-4 py-1 font-semibold rounded-l-xl"
         >
           Score per question
         </label>
         <select
           className="border-2 font-bold px-3 rounded-r-xl focus:border-gray-300"
-          id="score"
+          id="score_per_question"
         >
-            {[1,2,3,4,5,6,7,8,9,10].map(i=><option value={i}>{i}</option>)}
+            {score_per_question.map((i,idx)=><option key={idx} value={i}>{i}</option>)}
         </select>
       </div>
-    </div>
+    </div> 
 
     <div className="description mt-3 flex items-center rounded-xl">
       <label
@@ -115,7 +139,7 @@ export default function QuizModal() {
             className="border-2 font-bold px-3 rounded-r-xl focus:border-gray-300"
             id="difficulty"
           >
-            {["Easy","Medium","Hard"].map(i=><option value={i}>{i}</option>)}
+            {["Easy","Medium","Hard"].map((i,idx)=><option key={idx} value={i}>{i}</option>)}
           </select>
         </div>
 
@@ -130,7 +154,7 @@ export default function QuizModal() {
             className="border-2 font-bold px-3 rounded-r-xl focus:border-gray-300"
             id="category"
           >
-            {["FE","BE","Mobile application","Flutter","AI"].map(i=><option value={i}>{i}</option>)}
+            {category.map((i,idx)=><option key={idx} value={i}>{i}</option>)}
           </select>
         </div>
 
@@ -145,13 +169,14 @@ export default function QuizModal() {
             className="border-2 font-bold px-3 rounded-r-xl focus:border-gray-300"
             id="group"
           >
-            {["JSB","FE"]}
-            <option value="15">15</option>
-            <option value="20">20</option>
+            {groups?groups.map(group=><option value={String(group?._id)}>{group?.name}</option>):""}
           </select>
         </div>
       </div>
     </div>
-  </div>
+  </div>:<div className="text-6xl text-gray-500 flex items-center justify-center h-[40vh]">
+  <Loading/>
+  </div>}
+</>
   )
 }

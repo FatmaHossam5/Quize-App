@@ -57,7 +57,7 @@ export default function Quizzes() {
         }}
         onClose={handleClose}
         body={
-<QuizModal/>
+          modalState =="add"?<QuizModal/>:""
         }
       />
 

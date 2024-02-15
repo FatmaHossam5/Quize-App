@@ -17,21 +17,13 @@ import MasterLayout from "./Shared/MasterLayout/MasterLayout";
 import NotFound from "./Shared/NotFound/NotFound";
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 
-import ViewResult from "./Components/ViewResult/ViewResult";
-import SpacificQuiz from "./Components/Quizzes/SpacificQuiz/SpacificQuiz";
-import { useEffect } from "react";
 import Questions from "./Components/Questions/Questions";
+import SpacificQuiz from "./Components/Quizzes/SpacificQuiz/SpacificQuiz";
+import ViewResult from "./Components/ViewResult/ViewResult";
 function App() {
   
-  let {headers,userData}=useSelector((state:any)=>state.userData);
-  useEffect(() => {
-    console.log(headers);
-    console.log(userData);
-    
-  }, [userData])
-  
+  let {userData}=useSelector((state:any)=>state.userData);
 
-  
   const routes = createBrowserRouter([
     {
       path: "dashboard",
@@ -46,7 +38,6 @@ function App() {
         { path: "results", element: <Results /> },
         { path: "questions", element: <Questions /> },
         { path: "results/:viewResults", element: <ViewResult /> },
-
       ],
     },
     {
