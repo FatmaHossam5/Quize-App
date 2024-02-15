@@ -11,7 +11,7 @@ import userImg from '../../assets/user img.png';
 
 export default function Students() {
   const { headers } = useSelector((state: any) => state.userData)
-  const { getData, students } = useFetchData()
+  const { getData, fetchedData:students } = useFetchData()
   const [modalAction, setModalAction] = useState('close');
   const [studentId, setStudentId] = useState('')
   const [groups, setGroup] = useState(new Array)

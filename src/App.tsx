@@ -20,6 +20,7 @@ import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 import ViewResult from "./Components/ViewResult/ViewResult";
 import SpacificQuiz from "./Components/Quizzes/SpacificQuiz/SpacificQuiz";
 import { useEffect } from "react";
+import Questions from "./Components/Questions/Questions";
 function App() {
   
   let {headers,userData}=useSelector((state:any)=>state.userData);
