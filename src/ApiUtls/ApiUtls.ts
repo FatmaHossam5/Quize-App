@@ -14,11 +14,13 @@ export const getData = ({path,headers,setState}:getDataParameter):object|void =>
     axios
       .get(`${baseUrl}/${path}`, headers)
       .then((response) => {
-        // console.log(response);
+        console.log(response.data);
         
         setState?setState(response.data):""
       })
       .catch((error) => {
+        console.log(error);
+        
         toast.error(error.response.data.message || "Invalid Data");
       });
   };
