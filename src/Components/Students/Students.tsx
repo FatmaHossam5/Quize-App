@@ -10,6 +10,7 @@ import userImg from "../../assets/user img.png";
 import AddStudentToGroup from "../AddStudentToGroup/AddStudentToGroup";
 import StudentCard from "../StudentCard/StudentCard";
 import Label from "../../Shared/Label/Label";
+import NoData from "../../Shared/NoData/NoData";
 
 export default function Students() {
   const { headers } = useSelector((state: any) => state.userData);
@@ -178,9 +179,9 @@ export default function Students() {
                 ))}
               </div>
             ) : (
-              <div className=" text-6xl h-[50%] w-full  flex items-center justify-center py-5">
-                <Loading />
-              </div>
+             
+                <NoData/>
+           
             )}
             <SharedModal
               show={modalAction === "delete"}
@@ -251,6 +252,7 @@ export default function Students() {
                 </>
               }
             />
+         
           </div>
         </div>
       </div>
