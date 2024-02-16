@@ -51,6 +51,9 @@ function App() {
         { path: "request-reset-password", element: <RequsetResetPass /> },
         { path: "reset-password", element: <RestPassword /> },
         { path: "change-password", element: <ChangePassword /> },
+        
+
+        
       ],
     },
     // {
