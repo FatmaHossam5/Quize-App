@@ -4,7 +4,12 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { baseUrl } from "./ApiUtls";
 
-const useFetchData = () => {
+interface UseFetchData{
+  fetchedData:object[];
+  getData:(path:string)=>void
+}
+
+const useFetchData = ():UseFetchData => {
   const [fetchedData, setFetchedData] = useState([]);
   const { headers } = useSelector((state: any) => state.userData);
 
@@ -15,6 +20,7 @@ const useFetchData = () => {
         setFetchedData(response.data);
       })
       .catch((error) => {
+        console.log(error);
         toast.error(error.response.data.message || "Invalid Data");
       });
   };

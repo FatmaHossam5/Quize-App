@@ -166,7 +166,7 @@ export default function Rigester() {
               className="mt-1  border-none p-2 w-full focus:outline-none bg-auth "
             >
               <option value="Instructor">Instructor</option>
-              <option value="Learner">Learner</option>
+              <option value="Student">Learner</option>
             </select>
             {errors.role && (
               <ErrorMessage>{String(errors.role.message)}</ErrorMessage>
