@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 interface Quiz {
   imageSrc: string;
   name: string;
@@ -8,7 +7,6 @@ interface Quiz {
   studentsEnrolled: number;
   id: string;
 }
-
 export default function QuizCard({
   imageSrc,
   name,

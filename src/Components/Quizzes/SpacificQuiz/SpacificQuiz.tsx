@@ -1,67 +1,140 @@
 import { Link, useParams } from "react-router-dom";
 import Label from "../../../Shared/Label/Label";
+import { useEffect, useState } from "react";
+import { getData } from "../../../ApiUtls/ApiUtls";
+import { useSelector } from "react-redux";
+import Loading from "../../../Shared/Loading/Loading";
+import SharedModal from "../../../Shared/AddModal/AddModal";
+import QuizModal from "../QuizModal/QuizModal";
+import CodeModal from "../CodeModal/CodeModal";
+
+export interface quiz {
+  data: {
+    _id:string;
+    title: string;
+    schadule: string;
+    duration: string;
+    questions_number: string;
+    score_per_question: string;
+    description: string;
+    type: string;
+  };
+}
 
 export default function SpacificQuiz() {
-  const { quizName } = useParams();
-  const name = quizName?.replace(/-/g, " ");
-  console.log({ name });
+  const { quizId } = useParams();
+  const { headers } = useSelector((state: any) => state.userData);
+  const [quiz, setQuiz] = useState<quiz>();
+
+  useEffect(() => {
+    getData({ path: `quiz/${quizId}`, headers, setState: setQuiz });
+  }, []);
+
+
+  const [modalState, setModalState] = useState("close");
+  const [code, setCode] = useState<string>("");
+  const handleClose = () => {
+    setModalState("close");
+  };
+  const openUpdateModal = () => {
+    setModalState("update");
+  };
+
 
   return (
     <>
-      <div className="quiz-name">
-        <Link to="/dashboard/Quizzes" className="m-2 font-semibold">
-          Quizzes <i className="fa-solid fa-angle-right text-secondry"></i>
-          <i className="fa-solid fa-angle-right text-secondry"></i> 
-        </Link>
-        <span>{name}</span>
+      {quiz ? (
+        <div className="quiz-name">
+          <Link to="/dashboard/quizzes" className="m-2 font-semibold">
+            Quizzes <i className="fa-solid fa-angle-right text-secondry"></i>
+            <i className="fa-solid fa-angle-right text-secondry"></i>
+          </Link>
+          <span>{quiz?.data?.title}</span>
 
-        <div className="grid md:grid-cols-3 grid-cols-1">
-          <div className="content my-4 mx-2">
-            <div className="header border-2 p-3 rounded-xl">
-              <h2 className="text-2xl font-bold">{name}</h2>
-              <div className="flex my-3">
-                <p>
-                  <i className="fa-solid fa-calendar-days mr-1"></i>12 / 03 /
-                  2023{" "}
-                </p>
-                <p>
-                  <i className="fa-solid fa-clock mx-1"></i>09 : 00
-                </p>
-              </div>
-              <Label word="Duration" value="10 minutes" />
-              <Label word="Number of questions" value="15" />
-              <Label word="Score per question" value="1" />
-              <Label
-                word="Description"
-                class_Name="grid-cols-1"
-                textClassName="text-sm"
-                value="Lorem ipsum aset amet consectedur im nascsa assadqw assacsc aidwqdjv asdewfas qwdass Lorem ipsum aset amet consectedur im nascsa assadqw assacsc aidwqdjv"
-              />
-              <Label word="Question bank used" value="Bank one" />
-              <div className="flex items-center">
-                <input
-                  id="link-checkbox"
-                  type="checkbox"
-                  value=""
-                  className="w-5 h-5 rounded accent-black "
+          <div className="grid md:grid-cols-3 grid-cols-1">
+            <div className="content my-4 mx-2">
+              <div className="header border-2 p-3 rounded-xl">
+                <h2 className="text-2xl font-bold">{quiz?.data?.title}</h2>
+                <div className="flex my-3">
+                  <p>
+                    <i className="fa-solid fa-calendar-days mr-1"></i>
+                    {quiz.data.schadule.split("T")[0]}
+                  </p>
+                  <p>
+                    <i className="fa-solid fa-clock mx-1"></i>
+                    {quiz.data.schadule.split("T")[1].split(".")[0]}
+                  </p>
+                </div>
+                <Label word="Duration" value={quiz?.data?.duration} />
+                <Label
+                  word="Number of questions"
+                  value={quiz?.data?.questions_number}
                 />
-                <label
-                  htmlFor="link-checkbox"
-                  className="ms-2 text-sm font-medium text-gray-900"
-                >
-                  Randomize questions.
-                </label>
-              </div>
-              <div className="text-end">
-                <button className="bg-zinc-900 hover:bg-zinc-700 text-white rounded-lg px-3 py-1 text-sm font-bold my-2">
-                  <i className="fa-solid fa-pen text-white mx-1"></i>
-                  Edit
-                </button>
+                <Label
+                  word="Score per question"
+                  value={quiz?.data?.score_per_question}
+                />
+                <Label
+                  word="Description"
+                  class_Name="grid-cols-1"
+                  textClassName="text-sm"
+                  value={quiz?.data?.description}
+                />
+                <Label word="Question bank used" value={quiz?.data?.type} />
+                <div className="flex items-center">
+                  <input
+                    id="link-checkbox"
+                    type="checkbox"
+                    className="w-5 h-5 rounded accent-black"
+                  />
+                  <label
+                    htmlFor="link-checkbox"
+                    className="ms-2 text-sm font-medium text-gray-900"
+                  >
+                    Randomize questions.
+                  </label>
+                </div>
+                <div className="text-end">
+                  <button onClick={openUpdateModal} className="bg-zinc-900 hover:bg-zinc-700 text-white rounded-lg px-3 py-1 text-sm font-bold my-2">
+                    <i className="fa-solid fa-pen text-white mx-1"></i>
+                    Edit
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="h-1/2 flex items-center justify-center w-full text-6xl">
+          <Loading />
+        </div>
+      )}
+
+
+<SharedModal
+        show={modalState === "update"}
+        title="Update quiz"
+        onSave={() => {
+         ()=>{}
+        }}
+        onClose={handleClose}
+        body={
+          modalState =="update"?<QuizModal quiz={quiz} setCode={setCode} setModalState={setModalState} handleClose={handleClose}/>:""
+        }
+      />
+            <SharedModal
+        show={modalState === "quiz-code"}
+        title=""
+        onSave={() => {
+          console.log("hello");
+        }}
+        omitHeader={true}
+        onClose={handleClose}
+        body={
+          <CodeModal handleClose={handleClose} code={code}/>
+
+        }
+      />
     </>
   );
 }

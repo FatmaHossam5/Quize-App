@@ -1,47 +1,40 @@
-import React, { useState, useEffect } from "react";
-import AddQuestionModal from "./AddQuestionModal";
-import UpdateQuestionModal from "./UpdateQuestionModal";
-import DeleteQuestionModal from "./DeleteQuestionModal";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import Loading from "../../Shared/Loading/Loading";
-import { useForm } from "react-hook-form";
-
-export default function Questions(props) {
+import AddQuestionModal from "./AddQuestionModal";
+import DeleteQuestionModal from "./DeleteQuestionModal";
+import UpdateQuestionModal from "./UpdateQuestionModal";
+export default function Questions() {
   const [questionsList, setQuestionsList] = useState([]);
   const [isloading, setIsLoading] = useState(false);
- 
+
   //******** const modals add,update,delete*******//
-  const [modalState, setModalState] = useState(null);
+  const [modalState, setModalState] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState(null);
   const [question, setQuestion] = useState(null);
-
 
   const handleAddModal = () => {
     setModalState("add");
     setIsOpen(true);
   };
-  const handleUpdateModal = (question) => {
+  const handleUpdateModal = (question: any) => {
     setModalState("update");
-    setQuestion(question)
+    setQuestion(question);
     setIsOpen(true);
-   
   };
-  const handleDeleteModal = (id) => {
+  const handleDeleteModal = (id: any) => {
     setModalState("delete");
-    setId(id)
+    setId(id);
     setIsOpen(true);
   };
-
   const handleCloseModal = () => {
     setIsOpen(false);
   };
 
   const { userData } = useSelector((state: any) => state.userData);
-  let reqHeaders=`Bearer ${userData?.accessToken}`
-
+  let reqHeaders = `Bearer ${userData?.accessToken}`;
 
   const getAllQuestions = () => {
     axios
@@ -52,7 +45,7 @@ export default function Questions(props) {
         setIsLoading(true);
         setQuestionsList(response?.data);
       })
-     
+
       .finally(() => {
         setIsLoading(false);
       });
@@ -64,9 +57,7 @@ export default function Questions(props) {
   return (
     <>
       <div className="m-3 p-2 border rounded-md">
-        {/* //****************content above table************** */}
-
-        <div className=" w-full flex justify-between">
+        <div className=" mb-3 flex justify-between">
           <h3 className="font-bold mt-3 ">Bank Of Questions</h3>
           <button
             onClick={handleAddModal}
@@ -77,66 +68,56 @@ export default function Questions(props) {
           </button>
         </div>
 
-        {/* //****************table of questions list************** */}
-
-        <div className="flex flex-col">
-          <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-              <div className="overflow-hidden">
-                {isloading ? (
-                  <div className="text-center text-5xl">
+        <div>
+          {isloading ? (
+            <div className=" text-6xl flex items-center h-[70vh] justify-center">
+              <Loading />
+            </div>
+          ) : (
+            <div>
+              {" "}
+              <div className="table-responsive">
+                {!questionsList ? (
+                  <div className=" text-6xl flex items-center h-[70vh] justify-center">
                     <Loading />
                   </div>
                 ) : (
-                  <table className="min-w-full text-left text-sm font-bold">
-                    <thead className="border rounded-2xl font-medium bg-black text-gray-50 dark:border-neutral-500">
-                      <tr className="divide-x">
-                        <th scope="col" className="px-6 py-2">
-                          Question Title
-                        </th>
-                        <th scope="col" className="px-6 py-2">
-                          Difficulty
-                        </th>
-                        <th scope="col" className="px-6 py-2">
-                          Category
-                        </th>
-                        <th scope="col" className="px-6 py-2">
-                          Right Answer
-                        </th>
-                        <th scope="col" className="px-6 py-2">
-                          Actions
-                        </th>
+                  <table className="text-sm font-bold table">
+                    <thead>
+                      <tr>
+                        <th className="bg-black text-white">Question Title</th>
+                        <th className="bg-black text-white">Difficulty</th>
+                        <th className="bg-black text-white">Category</th>
+                        <th className="bg-black text-white">Right Answer</th>
+                        <th className="bg-black text-white">Actions</th>
                       </tr>
                     </thead>
 
                     <tbody>
-                      {questionsList.map((question, id) => (
+                      {questionsList.map((question, idx) => (
                         <tr
-                          key={question?._id}
+                          key={idx}
                           className=" border rounded-2xl divide-x my-4 dark:border-neutral-500"
                         >
-                          <td className=" whitespace-nowrap px-3 py-3 font-medium">
+                          <td className=" py-3 font-medium">
                             {question?.title.substring(0, 35) +
                               (question?.title.length > 35 ? "..." : "")}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-3">
-                            {question?.difficulty}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-3">
-                            {question?.type}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-3">
-                            {question?.answer}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-3">
-                            <div className="flex justify-evenly text-orange-600">
-                              <i className="fa-solid fa-eye"></i>
+                          <td className="py-3">{question?.difficulty}</td>
+                          <td className="py-3">{question?.type}</td>
+                          <td className="py-3">{question?.answer}</td>
+                          <td className="py-3">
+                            <div className=" text-orange-600">
                               <i
-                                onClick={()=>{handleUpdateModal(question)}}
-                                className="fa-solid fa-pen-to-square"
+                                onClick={() => {
+                                  handleUpdateModal(question);
+                                }}
+                                className="fa-solid mr-4 fa-pen-to-square"
                               ></i>
                               <i
-                                onClick={()=>{handleDeleteModal(question?._id)}}
+                                onClick={() => {
+                                  handleDeleteModal(question?._id);
+                                }}
                                 className="fa-solid fa-trash-can"
                               ></i>
                             </div>
@@ -146,9 +127,9 @@ export default function Questions(props) {
                     </tbody>
                   </table>
                 )}
-              </div>
+              </div>{" "}
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -162,7 +143,6 @@ export default function Questions(props) {
         ""
       )}
 
-      
       {modalState === "update" ? (
         <UpdateQuestionModal
           getAllQuestions={getAllQuestions}
@@ -173,7 +153,6 @@ export default function Questions(props) {
       ) : (
         ""
       )}
-     
 
       {modalState === "delete" ? (
         <DeleteQuestionModal

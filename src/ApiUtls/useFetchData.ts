@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { baseUrl } from "./ApiUtls";
 
 interface UseFetchData{
-  fetchedData:object[];
+  fetchedData:any;
   getData:(path:string)=>void
 }
 
