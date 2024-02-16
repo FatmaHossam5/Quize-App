@@ -20,6 +20,7 @@ import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 import Questions from "./Components/Questions/Questions";
 import SpacificQuiz from "./Components/Quizzes/SpacificQuiz/SpacificQuiz";
 import ViewResult from "./Components/ViewResult/ViewResult";
+import Quiz from "./Components/StudentComponents/Quiz/Quiz";
 function App() {
   
   let {userData}=useSelector((state:any)=>state.userData);
@@ -53,21 +54,16 @@ function App() {
         { path: "change-password", element: <ChangePassword /> },
       ],
     },
-    // {
-    //   path: "student",
-    //   element: <MasterLayout />,
-    //          errorElement: <NotFound />,
-    //   children: [
-    //     { index: true, element: <Home /> },
-    //     { path: "groups", element: <Groups /> },
-    //     { path: "student", element: <Students /> },
-    //     { path: "quizzes", element: <Quizzes /> },
-    //     {path:":quizName",element:<SpacificQuiz/>},
-    //     { path: "results", element: <Results /> },
-    //     { path: "questions", element: <Questions /> },
-    //     { path: "results/:viewResults", element: <ViewResult /> },
-    //   ],
-    // },
+    {
+      path: "student",
+      element: <MasterLayout />,
+             errorElement: <NotFound />,
+      children: [
+        { index: true, element: <Home /> },
+        { path: "quizzes", element: <Quiz /> },
+      
+      ],
+    },
   ]);
 
   return (
