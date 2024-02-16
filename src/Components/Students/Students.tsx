@@ -33,12 +33,12 @@ export default function Students() {
 
 
   };
-//get Data for View
- const getAll =(studentInfo)=>{
-  setStudentData(studentInfo)
- }
+  //get Data for View
+  const getAll = (studentInfo) => {
+    setStudentData(studentInfo)
+  }
   console.log(studentData);
-  
+
 
   //handle Close Modal
   const closeModal = () => setModalAction("close");
@@ -79,7 +79,7 @@ export default function Students() {
     axios
       .get(`https://upskilling-egypt.com:3005/api/group/${id}`, headers)
       .then((res) => {
-    
+
 
         setStudents(res.data.students);
       })
@@ -111,10 +111,10 @@ export default function Students() {
 
   useEffect(() => {
     getGroups();
-   
 
 
-  }, [groupId,studentData]);
+
+  }, [groupId, studentData]);
 
   return (
     <>
@@ -132,7 +132,7 @@ export default function Students() {
               {groups.map((group, index) => (
                 <>
                   <button
-                 
+
                     onClick={() => getGroupById(group._id)}
                     className={` w-36 px-1 mr-3 rounded-3xl border ${group._id === activeGroupId ? 'bg-black text-white' : ''
                       } border-black w-32 mt-4`}
@@ -158,14 +158,12 @@ export default function Students() {
             </div>
             <div>
 
-</div>
+            </div>
 
             {students.length > 0 ? (
               <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-4  mx-5  pr-4 ">
                 {students.map((student, index) => (
                   <div key={index} className="flex flex-col ml-4 mt-4">
-
-
                     <StudentCard
                       firstName={student.first_name}
                       lastName={student.last_name}
@@ -214,23 +212,45 @@ export default function Students() {
                 </div>
               }
             />
-            
-<SharedModal
-  show={modalAction === "view"}
-  title="Student Info"
 
-  onClose={closeModal}
-  body={
-    <>
-   <Label word='FirstName'
-   class_Name="w-[80%] m-auto"
-  
+            <SharedModal
+              show={modalAction === "view"}
+              title="Student Info"
+              onClose={closeModal}
+              onSave={() => console.log(studentData)}
+              body={
+                <>
+                  <Label word='FirstName'
+                    class_Name="w-[80%] m-auto"
+                    value={studentData && studentData.first_name}
 
 
-  />
-    </>
-  }
-/>
+
+                  />
+                  <Label word='lastName'
+                    class_Name="w-[80%] m-auto"
+                    value={studentData && studentData.last_name}
+
+
+
+                  />
+                  <Label word='Email'
+                    class_Name="w-[80%] m-auto"
+                    value={studentData && studentData.email}
+
+
+
+                  />
+                  <Label word='Group-Name'
+                    class_Name="w-[80%] m-auto"
+                    value={studentData && studentData.group.name}
+
+
+
+                  />
+                </>
+              }
+            />
           </div>
         </div>
       </div>
