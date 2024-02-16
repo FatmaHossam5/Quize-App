@@ -26,6 +26,7 @@ export const getData = ({
     });
 };
 
+
 export const fetchDataForSlice = (path: string, fn: any): void => {
   axios
     .get(`${baseUrl}/${path}`, {
@@ -46,3 +47,4 @@ export const fetchDataForSlice = (path: string, fn: any): void => {
       toast.error(error.response.data.message || "Invalid Data");
     });
 };
+

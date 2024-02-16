@@ -73,8 +73,26 @@ function App() {
         { path: "request-reset-password", element: <RequsetResetPass /> },
         { path: "reset-password", element: <RestPassword /> },
         { path: "change-password", element: <ChangePassword /> },
+        
+
+        
       ],
     },
+    // {
+    //   path: "student",
+    //   element: <MasterLayout />,
+    //          errorElement: <NotFound />,
+    //   children: [
+    //     { index: true, element: <Home /> },
+    //     { path: "groups", element: <Groups /> },
+    //     { path: "student", element: <Students /> },
+    //     { path: "quizzes", element: <Quizzes /> },
+    //     {path:":quizName",element:<SpacificQuiz/>},
+    //     { path: "results", element: <Results /> },
+    //     { path: "questions", element: <Questions /> },
+    //     { path: "results/:viewResults", element: <ViewResult /> },
+    //   ],
+    // },
   ]);
 
   return (

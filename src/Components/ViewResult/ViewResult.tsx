@@ -46,7 +46,7 @@ export default function ViewResult() {
 
         <div className='mt-3 ml-1'>
           <Link to="/dashboard/results" className="m-2 font-semibold">
-            Quizzes <i className="fa-solid fa-angle-right text-secondry"></i>
+            Results <i className="fa-solid fa-angle-right text-secondry"></i>
             <i className="fa-solid fa-angle-right text-secondry"></i>
           </Link>
           <span>{name}</span>
