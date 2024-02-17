@@ -19,7 +19,10 @@ const useCustomFetch = () => {
       .then((res) => {
         dispatch(setUserData(res.data.data));
         toast.success(res.data.message);
-        navigate(navigateTo);
+        if (res.data.data?.profile?.role=="Student") {
+          return navigate(`/student`)
+        }
+        return navigate(navigateTo);
       })
       .catch((error) => {
         toast.error(error.response?.data?.message || "Invalid data");

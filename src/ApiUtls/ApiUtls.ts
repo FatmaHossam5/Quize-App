@@ -19,7 +19,6 @@ export const getData = ({
     .get(`${baseUrl}/${path}`, headers)
     .then((response) => {
       setState ? setState(response.data) : console.log(response.data);
-      return response.data;
     })
     .catch((error) => {
       toast.error(error.response.data.message || "Invalid Data");
@@ -37,6 +36,7 @@ export const fetchDataForSlice = (path: string, fn: any): void => {
       },
     })
     .then((response) => {
+// console.log(response);
 
       fn(response.data);
     
