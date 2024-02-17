@@ -1,12 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { logOut } from "../../Redux/Slices/AuthSlice/AuthSlice";
 import { useState } from "react";
-import SharedModal from "../Modal/Modal";
-import QuizModal from "../../Components/Quizzes/QuizModal/QuizModal";
+import { useDispatch, useSelector } from "react-redux";
 import CodeModal from "../../Components/Quizzes/CodeModal/CodeModal";
+import QuizModal from "../../Components/Quizzes/QuizModal/QuizModal";
+import { logOut } from "../../Redux/Slices/AuthSlice/AuthSlice";
+import SharedModal from "../Modal/Modal";
 
 export default function NavBar() {
+
   const dispatch = useDispatch();
   const [dropDownMenuState, setdropDownMenuState] = useState(false);
   const { userData } = useSelector((state: any) => state.userData);
@@ -36,10 +36,14 @@ export default function NavBar() {
           <div className="flex items-center ">
             <div className="px-1">
               <div className="">
-                <button onClick={showAddModal} className="border rounded-2xl duration-500 hover:bg-zinc-950 hover:text-gray-50 border-black px-1 ">
-                  <i className="fa-solid fa-clock"></i>
+                {role!=="Student"?                <button onClick={showAddModal} className="border rounded-2xl duration-500 hover:bg-zinc-950 hover:text-gray-50 border-black px-1 ">
+                  <i className="fa-solid mx-2 fa-clock"></i>
                   <span className="mx-1">New Quiz</span>
-                </button>
+                </button>:                <button className="border rounded-2xl duration-500 hover:bg-zinc-950 hover:text-gray-50 border-black px-1 ">
+                  <i className="fa-solid mx-2 fa-clock"></i>
+                  <span className="mx-1">Join Quiz</span>
+                </button>}
+
               </div>
             </div>
 
@@ -67,12 +71,6 @@ export default function NavBar() {
                   }`}
                 >
                   <div className="py-1">
-                    <Link
-                      to="/dashboard/profile"
-                      className="text-gray-700 block px-4 py-2 text-sm font-semibold"
-                    >
-                      profile
-                    </Link>
                     <button
                       onClick={() => {
                         dispatch(logOut());
@@ -88,6 +86,8 @@ export default function NavBar() {
           </div>
         </div>
       </div>
+
+
 
       <SharedModal
         show={modalState === "add"}

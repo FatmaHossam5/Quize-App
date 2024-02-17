@@ -2,8 +2,8 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
 export default function ViewResult() {
-  const { viewResults } = useParams();
-  const name = viewResults?.replace(/-/g, " ");
+  const { viewResults:name } = useParams();
+
   const DataTable=[{
     studentName:"Hossam",
     Score:'17',
@@ -51,7 +51,7 @@ export default function ViewResult() {
           </Link>
           <span>{name}</span>
         </div>
-        <div className="border rounded-xl mt-4  w-50">
+        <div className="border rounded-xl mt-4">
           <div className="header flex justify-between ml-4">
             <h5 className="text-lg font-semibold my-2 mx-2">
               Results

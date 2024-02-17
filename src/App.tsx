@@ -13,14 +13,16 @@ import Rigester from "./Components/Register/Register";
 import RequsetResetPass from "./Components/RequsetResetPass/RequsetResetPass";
 import RestPassword from "./Components/RestPassword/RestPassword";
 import Results from "./Components/Results/Results";
+import Quiz from "./Components/StudentComponents/Quiz/Quiz";
 import Students from "./Components/Students/Students";
 import ViewResult from "./Components/ViewResult/ViewResult";
 import AuthLayout from "./Shared/AuthLayout/AuthLayout";
 import MasterLayout from "./Shared/MasterLayout/MasterLayout";
 import NotFound from "./Shared/NotFound/NotFound";
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
-import Quiz from "./Components/StudentComponents/Quiz/Quiz";
-import StudentsQuestion from "./Components/StudentComponents/Student'sQuestion/StudentsQuestion";
+import ProtectedRouteForStudent from "./Shared/ProtectedRouteForStudent/ProtectedRouteForStudent";
+import StudentLayout from "./Shared/StudentLayout/StudentLayout";
+import CollectValue from "./Components/CollectValue/CollectValue";
 
 
 function App() {
@@ -43,8 +45,8 @@ function App() {
         { path: "student", element: <Students /> },
         { path: "quizzes", element: <Quizzes /> },
         { path: ":quizId", element: <SpacificQuiz /> },
-        { path: "results", element: <Results /> },
         { path: "questions", element: <Questions /> },
+        { path: "results", element: <Results /> },
         { path: "results/:viewResults", element: <ViewResult /> },
       ],
     },
@@ -64,14 +66,12 @@ function App() {
     },
     {
       path: "student",
-      element: <MasterLayout />,
+      element:<ProtectedRouteForStudent userData={userData}><StudentLayout /></ProtectedRouteForStudent> ,
              errorElement: <NotFound />,
       children: [
-        { index: true, element: <Home /> },
-        { path: "quizzes", element: <Quiz /> },
-        { path: "questions", element: <StudentsQuestion /> },
-
-      
+        { index: true, element: <Quiz /> },
+        { path: "results", element: <Results/>},
+        { path: "results/:viewResults", element: <ViewResult /> },
       ],
     },
   ]);
