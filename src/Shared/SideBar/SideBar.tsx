@@ -10,6 +10,7 @@ export default function SideBar() {
   }
   return (
     <>
+    
       <div className="w-full  ">
         <Sidebar className="vh-100" collapsed={isCollapsed}>
           <Menu >

@@ -19,6 +19,8 @@ import AuthLayout from "./Shared/AuthLayout/AuthLayout";
 import MasterLayout from "./Shared/MasterLayout/MasterLayout";
 import NotFound from "./Shared/NotFound/NotFound";
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
+import Quiz from "./Components/StudentComponents/Quiz/Quiz";
+import StudentsQuestion from "./Components/StudentComponents/Student'sQuestion/StudentsQuestion";
 
 
 function App() {
@@ -60,21 +62,18 @@ function App() {
         
       ],
     },
-    // {
-    //   path: "student",
-    //   element: <MasterLayout />,
-    //          errorElement: <NotFound />,
-    //   children: [
-    //     { index: true, element: <Home /> },
-    //     { path: "groups", element: <Groups /> },
-    //     { path: "student", element: <Students /> },
-    //     { path: "quizzes", element: <Quizzes /> },
-    //     {path:":quizName",element:<SpacificQuiz/>},
-    //     { path: "results", element: <Results /> },
-    //     { path: "questions", element: <Questions /> },
-    //     { path: "results/:viewResults", element: <ViewResult /> },
-    //   ],
-    // },
+    {
+      path: "student",
+      element: <MasterLayout />,
+             errorElement: <NotFound />,
+      children: [
+        { index: true, element: <Home /> },
+        { path: "quizzes", element: <Quiz /> },
+        { path: "questions", element: <StudentsQuestion /> },
+
+      
+      ],
+    },
   ]);
 
   return (
