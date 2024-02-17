@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
 import Loading from '../../Shared/Loading/Loading';
+import SharedModal from "../../Shared/Modal/Modal";
 
 export default function UpdateQuestionModal({ isOpen, onClose, getAllQuestions, question }:any) {
 
@@ -43,6 +44,8 @@ export default function UpdateQuestionModal({ isOpen, onClose, getAllQuestions, 
       
     })
     .catch((error) => {
+      console.log(error);
+      
       toast.error(error?.response?.data?.message || "Error adding");
     })
     .finally(() => {
@@ -60,13 +63,12 @@ export default function UpdateQuestionModal({ isOpen, onClose, getAllQuestions, 
 
   return (
     <>
-      <div
-        className={`fixed left-0 top-0 z-[1055] flex justify-center items-center  h-full w-full overflow-y-auto overflow-x-hidden outline-none bg-black/40 ${
-          isOpen ? "" : "hidden"
-        }  focus:outline-none`}
-      >
-        <div className="relative min-w-auto max-w-full  bg-white rounded-lg shadow dark:bg-gray-700">
-          {isloading?<div className=" text-5xl flex items-center p-3 justify-center"><Loading/></div>:          <form onSubmit={handleSubmit(onSubmit)}>
+<SharedModal onClose={onClose}
+show={isOpen}
+omitHeader={true}
+
+body={
+            isloading? <div className=" text-5xl flex items-center justify-center"><Loading/></div>:          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="divide-x-2 px-4 flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100  dark:border-opacity-50">
               <h3
                 className="text-md font-bold py-3 leading-normal text-black dark:text-neutral-200"
@@ -240,7 +242,7 @@ export default function UpdateQuestionModal({ isOpen, onClose, getAllQuestions, 
                     className=" py-2 block w-full rounded-md px-1 border-1 border-zinc-400 rounded-r-3xl focus:border-zinc-500"
                   >
                     <option value="easy">easy </option>
-                    <option value="medium ">medium </option>
+                    <option value="medium">medium </option>
                     <option value="hard">hard</option>
                   </select>
 
@@ -264,7 +266,7 @@ export default function UpdateQuestionModal({ isOpen, onClose, getAllQuestions, 
                   >
                     <option value="FE">FE </option>
                     <option value="BE ">BE </option>
-                    <option value="FS">FS</option>
+                    <option value="DO">FS</option>
                   </select>
                   {errors?.type && errors.type.type === "required" && (
                     <ErrorMessage> {String(errors?.type.message)}</ErrorMessage>
@@ -273,9 +275,8 @@ export default function UpdateQuestionModal({ isOpen, onClose, getAllQuestions, 
                 </div>
               </div>
             </div>
-          </form>}
-        </div>
-      </div>
+          </form>
+}/>
     </>
   )
 }

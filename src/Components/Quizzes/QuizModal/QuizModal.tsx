@@ -15,15 +15,12 @@ interface Group {
   instructor: string;
   _id: string;
 }
-
 interface QuizModalProp {
   quiz?:quiz;
   handleClose?: () => void;
   setModalState: React.Dispatch<React.SetStateAction<string>>;
   setCode: React.Dispatch<React.SetStateAction<string>>;
 }
-
-
 interface formData {
   title?: string;
   description?: string;
@@ -45,14 +42,13 @@ interface formData {
   code?:string,
   _id?:string,
 }
-
 export default function QuizModal({ setModalState ,setCode,quiz}: QuizModalProp) {
   let {groups} = useSelector((state: any) => state.groups);
   const { headers } = useSelector((state: any) => state.userData);
   const [isLoading, setIsLoading] = useState(false);
 
   const durationAndQuestionNumber: number[] = [
-    5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60,
+    1,5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60,
   ];
   const difficulty: string[] = ["easy", "medium", "hard"];
   const score_per_question: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -71,11 +67,10 @@ export default function QuizModal({ setModalState ,setCode,quiz}: QuizModalProp)
   } = useForm();
   
   useEffect(() => {
-    if (quiz?.data) {
-      const {data}=quiz;
-      for (const key in data) {
-        if (data.hasOwnProperty(key)) {
-          setValue(key, data[key]);
+    if (quiz) {
+      for (const key in quiz) {
+        if (quiz.hasOwnProperty(key)) {
+          setValue(key, quiz[key]);
         }
       }
     }
@@ -117,12 +112,17 @@ export default function QuizModal({ setModalState ,setCode,quiz}: QuizModalProp)
     delete data.date
     delete data.createdAt
     delete data.code
+    delete data.questions_number
+    delete data.score_per_question
+    delete data.difficulty
+    delete data.type
+
     updateData(data)
     // console.log(data);
   }
   const updateData = (data: formData) => {
     axios
-      .put(`${baseUrl}/quiz/${quiz?.data._id}`, data, headers)
+      .put(`${baseUrl}/quiz/${quiz?._id}`, data, headers)
       .then((res) => {
         console.log(res);
         
@@ -131,8 +131,6 @@ export default function QuizModal({ setModalState ,setCode,quiz}: QuizModalProp)
         setModalState("quiz-code");
       })
       .catch((err) => {
-        console.log(err);
-        
         toast.error(String(err.response.data.message));
       })
       .finally(() => {
@@ -210,13 +208,13 @@ export default function QuizModal({ setModalState ,setCode,quiz}: QuizModalProp)
                 </label>
                 <select
                   {...register("questions_number", {
-                    required: "questions_number is required",
+                    required: "questions_number is required",valueAsNumber:true
                   })}
                   className="border-2 font-bold px-3 rounded-r-xl focus:border-gray-300"
                   id="questions_numberAndQuestionNumber"
                 >
                   {durationAndQuestionNumber.map((i, idx) => (
-                    <option key={idx} value={i}>
+                    <option key={idx} value={Number(i)}>
                       {i}
                     </option>
                   ))}
@@ -383,7 +381,7 @@ export default function QuizModal({ setModalState ,setCode,quiz}: QuizModalProp)
                     id="group"
                   >
                     {groups
-                      ? groups.map((group, idx) => (
+                      ? groups.map((group:Group, idx:number) => (
                           <option key={idx} value={String(group?._id)}>
                             {group?.name}
                           </option>
@@ -409,7 +407,6 @@ export default function QuizModal({ setModalState ,setCode,quiz}: QuizModalProp)
           <Loading />
         </div>
       )}
-
     </>
   );
 }

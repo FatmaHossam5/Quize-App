@@ -1,97 +1,242 @@
+import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { getData } from "../../ApiUtls/ApiUtls";
-
+import { toast } from "react-toastify";
+import { baseUrl } from "../../ApiUtls/ApiUtls";
+import useFetchData from "../../ApiUtls/useFetchData";
+import Label from "../../Shared/Label/Label";
+import Loading from "../../Shared/Loading/Loading";
+import SharedModal from "../../Shared/Modal/Modal";
+import trash from "../../assets/Email (1).png";
+import userImg from "../../assets/user img.png";
+import { studentInfo } from "../Students/Students";
 interface StudentCard {
-    img: string,
-    firstName: string,
-    lastName: string,
-    role: string,
-    handleOpenModal: (action:string,id:string) => void,
-    status: string,
-    id: string,
-    student: object,
-    sendStudentInfo: (studentInfo: any) => void
-
+  student: studentInfo;
+  getGroups: () => void;
+  activeGroupId: string
+  getGroupById: () => void;
+   groups: group[];
 }
-export default function StudentCard({ img, firstName, lastName, role, id, status, handleOpenModal, student, sendStudentInfo }: StudentCard) {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const { headers } = useSelector((state: any) => state.userData);
-    const [studentInfo, setStudentInfo] = useState();
+interface group{
+    _id?: string;
+    name?: string;
+    students?:object[],
+    status?:string,
+    max_students?:string,
+    instructor?:string,
+}
+export default function StudentCard({
+  student,
+  getGroups,
+  groups,activeGroupId,getGroupById
+}: StudentCard) {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { headers } = useSelector((state: any) => state.userData);
+  const [studentId, setStudentId] = useState<string>("close");
+  const [modalState, setModalState] = useState<string>("close");
+  const { fetchedData: studentData, getData, isLoading } = useFetchData();
+  const [groupId, setGroupId] = useState();
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+  const closeModal = () => {
+    setModalState("close");
+  };
+
+  const handleView = (id: string) => {
+    getUserInfo(id);
+    setModalState("view");
+  };
+  const getUserInfo = (id: string) => {
+    getData(`student/${id}`);
 
 
+  };
+  const handleEdit = (id: string) => {
+    setStudentId(id);
+    setModalState("Edit");
+  };
 
-    const toggleDropdown = () => {
-        setDropdownOpen(!dropdownOpen);
-    };
+  const handleUpdate = () => {
+    axios
+      .put(
+        `https://upskilling-egypt.com:3005/api/student/${studentId}/${groupId}`,{},headers
+      )
+      .then((res) => {
+        getGroupById(activeGroupId);
+        toast.success(res.data.message)
+      })
+      .catch((err) => {
+        console.log(headers);
+        toast.error(err.response.data.message)
+      });
+  };
 
-    const handleEdit = () => {
-        handleOpenModal("edit", student?._id);
-        setDropdownOpen(false)
-    };
 
-    const handleDelete = () => {
-        handleOpenModal("delete", student?._id);
-        // setDropdownOpen(false)
+const [loadingOfDeleteModal, setLoadingOfDeleteModal] = useState(false);
+  const handleDelete = (id: string) => {
+    setModalState("Delete");
+    setStudentId(id);
+  };
 
-    };
-    const getUserInfo = () => {
-        getData({ path: `student/${student?._id}`, headers, setState: setStudentInfo })
-        handleOpenModal("view", student?._id, studentInfo);
-        sendStudentInfo(studentInfo)
-    }
-  
-
-    const handleView = () => {
-        getUserInfo(student?._id)
-    };
-
-    return (
-        <>
-
-            <div className="flex flex-col ml-1 mt-4">
-
-                <div key={id} className="border rounded-2xl flex justify-between align-items-center relative">
-                    <div className='flex'>
-                        <img src={img} alt='userImage' className="w-16 h-16 mr-4" />
-                        <div className="mt-2">
-                            <p className="font-semibold mx-2">{firstName} {lastName}</p>
-                            <div className="flex">
-                                <p className='border-r mx-1 px-1'>Role: {role}</p>
-                                <p>Status: {status}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <button
-                            type="button"
-                            onClick={toggleDropdown}
-                            className="bg-white px-2 py-1 text-sm font-bold text-gray-900"
-                            id="menu-button"
-
-                        >
-                            <i className="fa-solid fa-ellipsis-vertical"></i>
-                        </button>
-                        {dropdownOpen && (
-                            <div className="absolute z-30 right-0 mt-2 w-28 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <div className="py-1" aria-orientation="vertical" aria-labelledby="menu-button">
-                                    <button onClick={handleView} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-                                        <i className="fa-solid fa-eye"></i> View
-                                    </button>
-                                    <button onClick={handleEdit} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-                                        <i className="fa-solid fa-edit"></i> Update
-                                    </button>
-                                    <button onClick={handleDelete} className="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100 hover:text-red-900" role="menuitem">
-                                        <i className="fa-solid fa-trash-alt"></i> Delete
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
+  const deleteStudent = () => {
+    setLoadingOfDeleteModal(true)
+    if (!studentId) return;
+    axios
+      .delete(`${baseUrl}/student/${studentId}`, headers)
+      .then((response) => {
+        toast.success(response?.data?.message);
+        getGroupById(activeGroupId)
+        closeModal();
+        getGroups();
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.message);
+      }).finally(()=>{
+        setLoadingOfDeleteModal(false)
+      })
+  };
+  return (
+    <>
+      <div className="flex flex-col ml-1 mt-4">
+        <div className="border rounded-2xl flex justify-between align-items-center relative">
+          <div className="flex">
+            <img src={userImg} alt="userImage" className="w-16 h-16 mr-4" />
+            <div className="mt-2">
+              <p className="font-semibold mx-2">
+                {student.first_name} {student.last_name}
+              </p>
+              <div className="flex">
+                <p className="border-r mx-1 px-1">Role :Student</p>
+                <p>Status :Active</p>
+              </div>
             </div>
+          </div>
+          <div>
+            <button
+              type="button"
+              onClick={toggleDropdown}
+              className="bg-white px-2 py-1 text-sm font-bold text-gray-900"
+              id="menu-button"
+            >
+              <i className="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            {dropdownOpen && (
+              <div className="absolute z-30 right-0 mt-2 w-28 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div
+                  className="py-1"
+                  aria-orientation="vertical"
+                  aria-labelledby="menu-button"
+                >
+                  <button
+                    onClick={() => {
+                      handleView(student._id);
+                    }}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    <i className="fa-solid fa-eye"></i> View
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleEdit(student._id);
+                    }}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    <i className="fa-solid fa-edit"></i> Update
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleDelete(student._id);
+                    }}
+                    className="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100 hover:text-red-900"
+                    role="menuitem"
+                  >
+                    <i className="fa-solid fa-trash-alt"></i> Delete
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      <SharedModal
+        show={modalState === "view"}
+        omitHeader={true}
+        onClose={closeModal}
+        body={
+          !isLoading ? (
+            <div className="px-3">
+              <Label
+                word="FirstName"
+                class_Name="w-[80%] m-auto"
+                value={studentData.first_name}
+              />
+              <Label
+                word="lastName"
+                class_Name="w-[80%] m-auto"
+                value={studentData.last_name}
+              />
+              <Label
+                word="Email"
+                class_Name="w-[80%] m-auto"
+                value={studentData.email}
+              />
+              <Label
+                word="Group-Name"
+                class_Name="w-[80%] m-auto"
+                value={studentData?.group?.name}
+              />
+            </div>
+          ) : (
+            <div className="flex items-center justify-center h-52 w-full text-5xl ">
+              <Loading />
+            </div>
+          )
+        }
+      />
 
-        </>
-    )
+      <SharedModal
+        show={modalState === "Delete"}
+        title="Delete Student"
+        onSave={deleteStudent}
+        onClose={closeModal}
+        body={!loadingOfDeleteModal?
+          <div className="text-center">
+            <img src={trash} alt="trash" className="w-1/6 m-auto" />
+            <p className="text-lg">
+              Are you sure you want to{" "}
+              <button onClick={deleteStudent} className="text-red-500 boreder-0">delete</button> this student?
+            </p>
+          </div>:<div className="flex items-center justify-center h-16 text-5xl">
+            <Loading/>
+          </div>
+        }
+      />
+      <SharedModal
+        show={modalState === "Edit"}
+        title="update Student"
+        onSave={handleUpdate}
+        onClose={closeModal}
+        body={
+          <div className="text-center">
+            <select
+              className="w-[90%] bg-authImage"
+              onChange={(eventInfo) => {
+                setGroupId(eventInfo.target.value);
+              }}
+            >
+              <option>Select Group</option>
+              {groups.map((group, idx) => (
+                <option key={idx} value={group._id}>
+                  {group.name}{" "}
+                </option>
+              ))}
+            </select>
+          </div>
+        }
+      />
+    </>
+  );
 }
