@@ -8,8 +8,7 @@ import { setUserData } from "../Redux/Slices/AuthSlice/AuthSlice";
 const baseAuthUrl = `https://upskilling-egypt.com:3005/api/auth`;
 
 const useCustomFetch = () => {
-
-  const dispatch =useDispatch(); 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -18,21 +17,17 @@ const useCustomFetch = () => {
     axios
       .post(`${baseAuthUrl}/${pathUrl}`, data)
       .then((res) => {
-
         dispatch(setUserData(res.data.data));
         toast.success(res.data.message);
         navigate(navigateTo);
-        
       })
       .catch((error) => {
         toast.error(error.response?.data?.message || "Invalid data");
-        
-      }).finally(
-        ()=>{
-          setLoading(false);
-setLoading(false);
-        })
-      
+      })
+      .finally(() => {
+        setLoading(false);
+        setLoading(false);
+      });
   };
 
   return { customFetch, loading };
