@@ -8,6 +8,9 @@ import Loading from "../../Shared/Loading/Loading";
 import trash from "../../assets/Email (1).png";
 import userImg from "../../assets/user img.png";
 import AddStudentToGroup from "../AddStudentToGroup/AddStudentToGroup";
+import StudentCard from "../StudentCard/StudentCard";
+import Label from "../../Shared/Label/Label";
+import NoData from "../../Shared/NoData/NoData";
 
 export default function Students() {
   const { headers } = useSelector((state: any) => state.userData);
@@ -17,11 +20,27 @@ export default function Students() {
   const [groups, setGroup] = useState(new Array());
   const [students, setStudents] = useState(new Array());
   const [groupId, setGroupId] = useState<string>();
+  const [gId, setGId] = useState('');
+  const [activeGroupId, setActiveGroupId] = useState(groups[0]?._id)
+  const [studentData, setStudentData] = useState();
+
+
+
   //handle Show Modal
-  const handleOpenModal = (action, studentId) => {
-    setModalAction(action);
-    setStudentId(studentId);
+  const handleOpenModal = (action: string, studentId: string) => {
+    setModalAction(action)
+    setStudentId(studentId)
+
+
+
   };
+  //get Data for View
+  const getAll = (studentInfo) => {
+    setStudentData(studentInfo)
+  }
+  console.log(studentData);
+
+
   //handle Close Modal
   const closeModal = () => setModalAction("close");
   //handle Delete Function
@@ -32,21 +51,14 @@ export default function Students() {
       .then((response) => {
         toast.success(response?.data?.message);
         closeModal();
+        getGroups();
 
       })
       .catch((error) => {
         toast.error(error?.response?.data?.message);
       });
   };
-  // handle Onclick Function of Add/Delete
-  const saveChanges = () => {
-    if (modalAction === "add") {
-      //handle Add Logic
-    } else if (modalAction === "delete") {
-      handleDelete();
-    }
-    closeModal();
-  };
+
   // handle Group
 
   const getGroups = () => {
@@ -64,9 +76,12 @@ export default function Students() {
   //invoke functions to get data
 
   const getGroupById = (id) => {
+    setActiveGroupId(id)
     axios
       .get(`https://upskilling-egypt.com:3005/api/group/${id}`, headers)
       .then((res) => {
+
+
         setStudents(res.data.students);
       })
       .catch((err) => {
@@ -74,39 +89,54 @@ export default function Students() {
       });
   };
 
-  const addUserToGroup=()=>{
-    getData({path:`student/${userId}/${groupId}`,headers});
+  const addUserToGroup = () => {
+    getData({ path: `student/${userId}/${groupId}`, headers });
+
+
+  }
+
+  const handleUpdate = () => {
+    console.log(studentId);
+
+    console.log(gId);
+
+    axios.put(`https://upskilling-egypt.com:3005/api/student/${studentId}/${gId}`, headers).then((response) => {
+      console.log(response);
+
+    }).catch((error) => {
+      console.log(error);
+
+    })
   }
 
 
   useEffect(() => {
     getGroups();
-    
-  }, [groupId]);
+
+
+
+  }, [groupId, studentData]);
 
   return (
     <>
       <div>
         <div className=" flex justify-end ">
-          <div className="rounded-3xl border border-black text-center  w-40 mt-2 mr-4  ">
-            <i className="fa-solid fa-circle-plus"></i>
+          <div className="rounded-3xl border border-black text-center  w-60 mt-2 mr-4 hover:bg-black hover:text-white ">
+            <i className="fa-solid fa-circle-plus mr-1"></i>
             <button onClick={() => handleOpenModal("add")}>Add Student to current group</button>
           </div>
         </div>
         <div className="p-3">
-          <div className="border rounded-2xl ">
+          <div className="border rounded-2xl py-3">
             <h3 className="ml-12 pt-2 font-semibold">Students List</h3>
             <div className="ml-12  ">
               {groups.map((group, index) => (
                 <>
                   <button
-                    onClick={() => {
-                      getGroupById(group?._id);
-                    }}
-                    key={index}
-                    className={` text-center px-2 mr-3 rounded-3xl border ${
-                      index === 0 ? "bg-black text-white" : ""
-                    } border-black w-32 mt-4`}
+
+                    onClick={() => getGroupById(group._id)}
+                    className={` w-36 px-1 mr-3 rounded-3xl border ${group._id === activeGroupId ? 'bg-black text-white' : ''
+                      } border-black w-32 mt-4`}
                   >
                     {group.name}
                   </button>
@@ -121,55 +151,42 @@ export default function Students() {
                 onSave={addUserToGroup}
                 onClose={closeModal}
                 body={
-                  modalAction =="add"?<AddStudentToGroup selectedStudentId={setUserId}/>:""
+                  <>{
+                    modalAction == "add" ? <AddStudentToGroup selectedStudentId={setUserId} /> : ""}
+                  </>
                 }
               />
+            </div>
+            <div>
+
             </div>
 
             {students.length > 0 ? (
               <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-4  mx-5  pr-4 ">
                 {students.map((student, index) => (
                   <div key={index} className="flex flex-col ml-4 mt-4">
-                    <div className="border rounded-2xl flex justify-between align-items-center">
-                      <div className="flex">
-                        <img
-                          src={userImg}
-                          alt="userImage"
-                          className="w-16 h-16 mr-4"
-                        />
-                        <div className="mt-2">
-                          <p className="font-semibold mx-2">
-                            {student?.first_name} {student?.last_name}
-                          </p>
-                          <p className="border-r mx-1 px-1">Role: Student</p>
-                        </div>
-                      </div>
-                      <div>
-                        <button>
-                          <i className="fa-solid fa-circle-arrow-right mt-[5px]  pr-2  "></i>
-                        </button>
-                        <button
-                          onClick={() =>
-                            handleOpenModal("delete", student?._id)
-                          }
-                        >
-                          <i className="fa-solid fa-trash mr-2 text-red-400"></i>
-                        </button>
-                      </div>
-                    </div>
+                    <StudentCard
+                      firstName={student.first_name}
+                      lastName={student.last_name}
+                      role='Student'
+                      status='Active'
+                      handleOpenModal={handleOpenModal}
+                      sendStudentInfo={getAll}
+                      student={student}
+                      img={userImg} />
+
                   </div>
                 ))}
               </div>
             ) : (
-              <div className=" text-6xl h-[50%] w-full  flex items-center justify-center py-5">
-                <Loading />
-              </div>
+             
+                <NoData/>
+           
             )}
-
             <SharedModal
               show={modalAction === "delete"}
               title="Delete Student"
-              onSave={saveChanges}
+              onSave={handleDelete}
               onClose={closeModal}
               body={
                 <div className="text-center">
@@ -181,6 +198,61 @@ export default function Students() {
                 </div>
               }
             />
+
+            <SharedModal
+              show={modalAction === "edit"}
+              title="update Student"
+              onSave={handleUpdate}
+              onClose={closeModal}
+              body={
+                <div className="text-center">
+                  <select className="w-[90%] bg-authImage" onClick={(eventInfo) => { return setGId(((eventInfo.target as HTMLInputElement).value)) }}>
+                    <option>Select Group</option>
+                    {groups.map((group, idx) => <option key={idx} value={group._id}>{group.name} </option>)}
+                  </select>
+                </div>
+              }
+            />
+
+            <SharedModal
+              show={modalAction === "view"}
+              title="Student Info"
+              onClose={closeModal}
+              onSave={() => console.log(studentData)}
+              body={
+                <>
+                  <Label word='FirstName'
+                    class_Name="w-[80%] m-auto"
+                    value={studentData && studentData.first_name}
+
+
+
+                  />
+                  <Label word='lastName'
+                    class_Name="w-[80%] m-auto"
+                    value={studentData && studentData.last_name}
+
+
+
+                  />
+                  <Label word='Email'
+                    class_Name="w-[80%] m-auto"
+                    value={studentData && studentData.email}
+
+
+
+                  />
+                  <Label word='Group-Name'
+                    class_Name="w-[80%] m-auto"
+                    value={studentData && studentData.group.name}
+
+
+
+                  />
+                </>
+              }
+            />
+         
           </div>
         </div>
       </div>

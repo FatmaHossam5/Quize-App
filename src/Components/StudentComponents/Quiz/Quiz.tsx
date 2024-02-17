@@ -1,19 +1,40 @@
 import React, { useState } from 'react'
-import UpcomingQuizes from '../../UpcomingQuizes/UpcomingQuizes'
-import CompletedQuizzes from '../../CompletedQuizzes/CompletedQuizzes'
+
 import SharedModal from '../../../Shared/AddModal/AddModal';
+import UpcomingQuizes from '../../Quizzes/UpcomingQuizes/UpcomingQuizes';
+import CompletedQuizzes from '../../Quizzes/CompletedQuizzes/CompletedQuizzes';
+import axios from 'axios';
+import { baseUrl } from '../../../ApiUtls/ApiUtls';
+import { useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import ErrorMessage from '../../../Shared/ErrorMessage/ErrorMessage';
 
 export default function Quiz() {
     const [modalState, setModalState] = useState("close");
+    const{headers}=useSelector((state:any)=>state.userData);
+    const{register,handleSubmit,formState:{errors}}=useForm()
 
   
-  
+
     const showAddModal = () => {
       setModalState("add1");
     };
     const handleClose = () => {
         setModalState("close");
       };
+      const joinQuiz=(data)=>{
+        console.log(data);
+        
+        axios.post(`${baseUrl}/quiz/join`,data,headers).then((response)=>{
+          console.log(headers);
+          
+          console.log(response);
+          
+        }).catch((error)=>{
+          console.log(error);
+          
+        })
+      }
   return (
     <>
     
@@ -40,9 +61,10 @@ export default function Quiz() {
       <SharedModal
         show={modalState === "add1"}
         title="Join Quiz"
-        onSave={() => {
-          console.log("hello");
-        }}
+        onSave={
+   ()=>{}
+        }
+        
         omitHeader={true}
         onClose={handleClose}
         body={
@@ -54,23 +76,28 @@ export default function Quiz() {
                 Join Quiz
                 </h2>
                 <span>Input the code received for the quiz below to join</span>
-                <div className="title mt-2 flex rounded-xl">
+                <form onSubmit={handleSubmit(joinQuiz)}  className="code mt-2 flex rounded-xl">
               <label
-                htmlFor="title"
+                htmlFor="code"
                 className="bg-authImage px-4 py-2 font-semibold rounded-l-xl text-center"
              
               >
               Code
               </label>
               <input
-                id="title"
-               
+                id="code"
+               {...register('code',{required:true})}
                 className="w-full border-2 px-1 rounded-r-xl py-2"
                 type="text"
               
 
               />
-            </div>
+                  {errors.code ? (
+                <ErrorMessage>{String(errors.code?.message)}</ErrorMessage>
+              ) : (
+                ""
+              )}
+         
               
                 <div className='   flex justify-center items-center mt-2' >
 
@@ -89,6 +116,7 @@ export default function Quiz() {
 
                     </div>
                 </div>
+                </form>
               </div>
             </div>
           </div>

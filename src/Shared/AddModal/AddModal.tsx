@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode } from 'react';
 interface SharedModalProps {
   show?: boolean;
   title: string;
@@ -16,6 +16,10 @@ const SharedModal: React.FC<SharedModalProps> = ({
   onSave,
   omitHeader
 }) => {
+
+  
+
+
   return (
     <div className={`fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50  ${show ? 'flex justify-center items-center' : 'hidden'}`}>
       <div className='bg-white min-w-[40%] max-w-[90%] h-auto rounded-lg'>
@@ -24,6 +28,8 @@ const SharedModal: React.FC<SharedModalProps> = ({
           <div className='Icons-close-save'>
             <button
               className={`border-l-2 p-3`}
+              form='quizModal'
+              type='submit'
               onClick={onSave}
             >
               <i className="fa-solid fa-check"></i>
