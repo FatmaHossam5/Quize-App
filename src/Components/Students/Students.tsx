@@ -1,199 +1,196 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import { baseUrl } from '../../ApiUtls/ApiUtls';
-import useFetchData from '../../ApiUtls/useFetchData';
-import SharedModal from '../../Shared/AddModal/AddModal';
-import Loading from '../../Shared/Loading/Loading';
-import trash from '../../assets/Email (1).png';
-import userImg from '../../assets/user img.png';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { baseUrl } from "../../ApiUtls/ApiUtls";
+import Loading from "../../Shared/Loading/Loading";
+import SharedModal from "../../Shared/Modal/Modal";
+import NoData from "../../Shared/NoData/NoData";
+import AddStudentToGroup from "./AddStudentToGroup/AddStudentToGroup";
+import StudentCard from "../StudentCard/StudentCard";
 
+export interface studentInfo {
+  email: string;
+  last_name: string;
+  first_name: string;
+  group: {
+    name: string;
+  };
+  _id: string;
+  avg_score?: string;
+}
 export default function Students() {
+  const { headers } = useSelector((state: any) => state.userData);
+  const [modalAction, setModalAction] = useState("close");
+  const [userId, setUserId] = useState("");
+  const [groups, setGroup] = useState(new Array());
+  const [groupId, setGroupId] = useState<string>();
+  const [activeGroupId, setActiveGroupId] = useState(groups[0]?._id);
 
-  const { headers } = useSelector((state: any) => state.userData)
-  const { getData, students } = useFetchData()
-  const [modalAction, setModalAction] = useState('close');
-  const [studentId, setStudentId] = useState('')
-  const [groups, setGroup] = useState(new Array)
-
-  //handle Show Modal
-  const handleOpenModal = (action, studentId) => {
-    setModalAction(action)
-    setStudentId(studentId)
-
+  const handleOpenModal = (action: string) => {
+    setModalAction(action);
   };
-  //handle Close Modal
-  const closeModal = () => setModalAction('close');
+  const closeModal = () => setModalAction("close");
 
-  //handle Delete Function
-  const handleDelete = () => {
-    if (!studentId) return;
-    axios.delete(`${baseUrl}/student/${studentId}`, headers).then((response) => {
-      toast.success(response?.data?.message)
-      closeModal();
-      getData('student')
-    }).catch((error) => {
-      toast.error(error?.response?.data?.message)
-
-    })
-  }
-
-  // handle Onclick Function of Add/Delete
-  const saveChanges = () => {
-    if (modalAction === 'add') {
-      //handle Add Logic
-    } else if (modalAction === 'delete') {
-      handleDelete();
-    }
-    closeModal()
-  };
-
-
-  // handle Group
   const getGroups = () => {
+    axios
+      .get(`${baseUrl}/group`, headers)
+      .then((response) => {
+        setGroup(response.data);
+        if (!groupId) {
+          setGroupId(response.data[0]?._id);
+          getGroupById(response.data[0]?._id);
+        }
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message || "Invalid Data");
+      });
+  };
 
-    axios.get(`${baseUrl}/group`, headers).then((response) => {
-      const groupSet = new Set(response.data.map(groupName => groupName?.name))
-      setGroup([...groupSet])
-    }).catch((error) => {
- 
-      toast.error(error.response.data.message || 'Invalid Data')
+  const [students, setStudents] = useState(new Array());
+  const [isLoading, setIsLoading] = useState(false);
+  const getGroupById = (id: string) => {
+    setActiveGroupId(id);
+    setIsLoading(true);
+    getStudentsFromGroup(id);
+  };
+  const getStudentsFromGroup = (id: string) => {
+    axios
+      .get(`${baseUrl}/group/${id}`, headers)
+      .then((res) => {
+        setStudents(res.data.students);
+      })
+      .catch((err) => {
+console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
-    })
-  }
+  const [addModalLoading, setaddModalLoading] = useState(false);
 
+  const addStudentToGroup = () => {
+    setaddModalLoading(true);
+    if (userId) {
+      return handleAddStudent();
+    } else {
+      toast.error("in-valid name");
+      setaddModalLoading(false);
+    }
+  };
 
+  const handleAddStudent = () => {
+    axios
+      .get(`${baseUrl}/student/${userId}/${groupId}`, headers)
+      .then((response) => {
+        toast.success(response.data.message);
+        closeModal();
+        getGroupById(activeGroupId);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      })
+      .finally(() => {
+        setaddModalLoading(false);
+      });
+  };
 
   useEffect(() => {
-    getData('student');
-    getGroups()
-
-
-  }, [])
-
+    getGroups();
+    console.log(groups);
+    
+  }, []);
 
   return (
     <>
       <div>
-        <div className=' flex justify-end ' >
-          <div className='rounded-3xl border border-black text-center  w-40 mt-2 mr-4  '>
-            <i className="fa-solid fa-circle-plus"></i>
-            <button onClick={() => handleOpenModal('add')} >Add Student</button>
+        {groups.length == 0 ? (
+          <div className="h-[50vh] w-full flex items-center justify-center text-7xl">
+            <Loading />
           </div>
-
-        </div>
-        <div className='p-3'>
-          <div className='border rounded-2xl '>
-            <h3 className='ml-12 pt-2 font-semibold'>
-              Students List
-            </h3>
-            <div className='ml-12  '>
-
-              {groups.map((group, index) => <>
-
-                <button key={index} className={` text-center px-2 mr-3 rounded-3xl border ${index === 0 ? 'bg-black text-white' : ''} border-black w-32 mt-4`}>{group}</button>
-              </>)}
+        ) : (
+          <>
+            <div className=" flex justify-end ">
+              <div className="rounded-3xl border duration-500 border-black text-center  w-60 mt-2 mr-4 hover:bg-black hover:text-white ">
+                <i className="fa-solid fa-circle-plus mr-1"></i>
+                <button onClick={() => handleOpenModal("add")}>
+                  Add Student to current group
+                </button>
+              </div>
             </div>
-            {/*Add Student Modal*/}
-            <div>
-              <SharedModal
-                show={modalAction === 'add'}
+            <div className="p-3">
+              <div className="border rounded-2xl py-3">
+                <h3 className="ml-12 pt-2 font-semibold">Students List</h3>
+                <div className="ml-12  ">
+                  {groups.map((group, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        setGroupId(group._id);
+                        getGroupById(group._id);
+                      }}
+                      className={` w-36 px-1 hover:text-gray-50 hover:bg-zinc-900 duration-500 mr-3 rounded-3xl border ${
+                        group._id === activeGroupId ? "bg-black text-white" : ""
+                      } border-black w-32 mt-4`}
+                    >
+                      {group.name}
+                    </button>
+                  ))}
+                </div>
+                <div>
+                </div>
+                <div></div>
 
-                title="Add New Student"
-                onSave={saveChanges}
-                onClose={closeModal}
-                body={(
-                  <div className='w-[90%] m-auto'>
-                    {/* Add student form */}
-                    {/* Name Input*/}
-                    <div className='my-1'>
-                      <div className='relative mt-2 rounded-md shadow-sm text-center'>
-                        <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 bg-red-300'>
-                          <span className='text-black sm:text-sm p-2'>Name</span>
-                        </div>
-                        <input
-                          type='text'
-                          name='name'
-                          id='name'
-                          className='py-2 block w-full rounded-md border-0      text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-                        />
+                {/* display students */}
+                {isLoading ? (
+                  <div className=" text-6xl h-[50%] w-full  flex items-center justify-center py-5">
+                    <Loading />
+                  </div>
+                ) : students.length > 0 ? (
+                  <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-4  mx-5  pr-4 ">
+                    {students.map((student: studentInfo, index) => (
+                      <div key={index} className="flex flex-col ml-4 mt-4">
+                        <StudentCard activeGroupId={activeGroupId} getGroupById={getGroupById} student={student} groups={groups} />
                       </div>
-                    </div>
-                    {/* Phone Input */}
-                    <div className='my-1'>
-                      <div className='relative mt-2 rounded-md shadow-sm  '>
-                        <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 bg-red-300'>
-                          <span className='text-black sm:text-sm p-2'>Phone</span>
-                        </div>
-                        <input
-                          type='text'
-                          name='phone'
-                          id='phone'
-                          className='py-2 block w-full rounded-md border-0  text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-                        />
-                        <div className='absolute inset-y-0 right-0 flex items-center'></div>
-                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="w-full flex items-center justify-center">
+                    <div className=" text-6xl w-[70%] py-5">
+                      <NoData />
                     </div>
                   </div>
                 )}
-              />
+              </div>
             </div>
-            {/*Display Students Data*/}
-            {students.length > 0 ? <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-4  mx-5  pr-4 ">
-              {
-                students.map((student, index) => (
-                  <div key={index} className="flex flex-col ml-4 mt-4">
-
-
-                    <div key={student?._id} className="border rounded-2xl flex justify-between align-items-center">
-                      <div className='flex'>
-                        <img src={userImg} alt='userImage' className="w-16 h-16 mr-4" />
-                        <div className="mt-2">
-                          <p className="font-semibold mx-2">{student?.first_name} {student?.last_name}</p>
-                          <p className='border-r mx-1 px-1'>Role: Student</p>
-
-                        </div>
-                      </div>
-                      <div>
-                        <button>
-                          <i className="fa-solid fa-circle-arrow-right mt-[5px]  pr-2  "></i>
-                        </button>
-                        <button onClick={() => handleOpenModal('delete', student?._id)}>
-                          <i className="fa-solid fa-trash mr-2 text-red-400"></i>
-                        </button>
-
-                      </div>
-                    </div>
-
-                  </div>
-                ))
-              }
-
-
-            </div> : <div className=' text-6xl h-[50%] w-full  flex items-center justify-center py-5'><Loading /></div>}
-
-            {/*Delete  Student Modal*/}
-
-            <SharedModal
-              show={modalAction === 'delete'}
-              title="Delete Student"
-              onSave={saveChanges}
-              onClose={closeModal}
-              body={(
-                <div className='text-center'>
-                  <img src={trash} alt="trash" className='w-1/6 m-auto' />
-                  <p className='text-lg'>Are you sure you want to <span className='text-red-500'>delete</span> this student?</p>
-                </div>
-              )}
-
-            />
-          </div>
-        </div>
-
+          </>
+        )}
       </div>
 
-    </>
-  )
-}
+      <SharedModal
 
+                    show={modalAction === "add"}
+                    title="Add New Student"
+                    onSave={() => {
+                      addStudentToGroup();
+                    }}
+                    onClose={closeModal}
+                    body={
+                      <>
+                        {modalAction == "add" ? (
+                          <AddStudentToGroup
+                          activeGroupId={activeGroupId}
+                          getGroupById={getGroupById}
+                            isLoading={addModalLoading}
+                            selectedStudentId={setUserId}
+                          />
+                        ) : (
+                          ""
+                        )}
+                      </>
+                    }
+                  />
+    </>
+  );
+}
