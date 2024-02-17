@@ -6,46 +6,7 @@ import { useEffect, useState } from "react";
 export default function Results() {
   const { headers } = useSelector((state: any) => state.userData);
   const[getResults,setGetResults]=useState([])
-  const DataTable=[{
-    title:"Assembly Language",
-    GroupNum:'1',
-    persons:'23 Persons',
-    participants:"20 Participants",
-    Data:"05/11/2024"
-  },
-  {
-    title:"Assembly Language",
-    GroupNum:'1',
-    persons:'23 Persons',
-    participants:"20 Participants",
-    Data:"05/11/2024"
-  },
-  {
-    title:"Assembly Language",
-    GroupNum:'1',
-    persons:'23 Persons',
-    participants:"20 Participants",
-    Data:"05/11/2024"
-  },{
-    title:"Assembly Language",
-    GroupNum:'1',
-    persons:'23 Persons',
-    participants:"20 Participants",
-    Data:"05/11/2024"
-  },{
-    title:"Assembly Language",
-    GroupNum:'1',
-    persons:'23 Persons',
-    participants:"20 Participants",
-    Data:"05/11/2024"
-  },{
-    title:"Assembly Language",
-    GroupNum:'1',
-    persons:'23 Persons',
-    participants:"20 Participants",
-    Data:"05/11/2024"
-  }
-]
+ 
 
 const getAllResults=()=>{
 

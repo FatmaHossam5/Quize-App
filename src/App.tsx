@@ -69,7 +69,7 @@ function App() {
       children: [
         { index: true, element: <Home /> },
         { path: "quizzes", element: <Quiz /> },
-        { path: "questions", element: <StudentsQuestion /> },
+        { path: "questions/:quizId", element: <StudentsQuestion /> },
 
       
       ],

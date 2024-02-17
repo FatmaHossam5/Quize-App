@@ -9,11 +9,15 @@ import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../../Shared/ErrorMessage/ErrorMessage';
 import SharedModal from '../../../Shared/Modal/Modal';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 export default function Quiz() {
     const [modalState, setModalState] = useState("close");
     const{headers}=useSelector((state:any)=>state.userData);
-    const{register,handleSubmit,formState:{errors}}=useForm()
+    const{register,handleSubmit,formState:{errors}}=useForm();
+    const navigate=useNavigate()
+    const[quizId,setQuizId]=useState('')
 
   
 
@@ -26,13 +30,22 @@ export default function Quiz() {
     const handleClose = () => {
         setModalState("close");
       };
+
       const joinQuiz=(data)=>{  
         axios.post(`${baseUrl}/quiz/join`,data,headers).then((response)=>{ 
-         console.log(response);
+      
          showSuccessJoinModal()
+         setTimeout(() => {
+          navigate(`/student/questions/${response.data.data.quiz}`);
+      }, 2000);
+        
+        //  toast.success(response.data.message)
+
           
         }).catch((error)=>{
           console.log(error);
+          
+         toast.error(error?.response?.data?.message)
           
         })
       }
@@ -59,7 +72,7 @@ export default function Quiz() {
           <CompletedQuizzes />
         </div>
       </div>
-      {/* <SharedModal
+      <SharedModal
         show={modalState === "add1"}
         title="Join Quiz"
         onSave={
@@ -125,9 +138,9 @@ export default function Quiz() {
             </div>
           </div>
         }
-      /> */}
+      />
       <SharedModal
-       show={modalState === "add1"}
+       show={modalState === "success"}
        title="Join Quiz"
        onSave={
   ()=>{}
@@ -137,15 +150,15 @@ export default function Quiz() {
        onClose={handleClose}
        body={
 <>
-<div className='text-center'>
+<div className='text-center mb-3'>
 <i className="fa-solid fa-circle-check fa-3x"></i>
 </div>
-<div className='text-center'>
-  <h3>Quiz joined successfully</h3>
-  <p>Python for noobs Quiz one</p>
+<div className='text-center '>
+  <h3 className='pb-2 font-semibold'>Quiz joined successfully</h3>
+  <p className=' font-semibold'>Python for noobs Quiz one</p>
 </div>
-<div>
-  <button  className="bg-secondry px-8 rounded-2xl mt-8">close</button>
+<div className='text-center'>
+  <button onClick={handleClose}  className="bg-secondry px-8 rounded-2xl mt-8 font-semibold">close</button>
 </div>
  </>
        }
