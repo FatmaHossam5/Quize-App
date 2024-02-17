@@ -2,6 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logOut } from "../../Redux/Slices/AuthSlice/AuthSlice";
 import { useState } from "react";
+import SharedModal from "../Modal/Modal";
+import QuizModal from "../../Components/Quizzes/QuizModal/QuizModal";
+import CodeModal from "../../Components/Quizzes/CodeModal/CodeModal";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -11,6 +14,15 @@ export default function NavBar() {
   const role = userData.profile.role;
   const handleDropDownState = () => {
     setdropDownMenuState(!dropDownMenuState);
+  };
+
+  const [modalState, setModalState] = useState("close");
+  const [code, setCode] = useState<string>("");
+  const handleClose = () => {
+    setModalState("close");
+  };
+  const showAddModal = () => {
+    setModalState("add");
   };
 
   return (
@@ -24,7 +36,7 @@ export default function NavBar() {
           <div className="flex items-center ">
             <div className="px-1">
               <div className="">
-                <button className="border rounded-2xl duration-500 hover:bg-zinc-950 hover:text-gray-50 border-black px-1 ">
+                <button onClick={showAddModal} className="border rounded-2xl duration-500 hover:bg-zinc-950 hover:text-gray-50 border-black px-1 ">
                   <i className="fa-solid fa-clock"></i>
                   <span className="mx-1">New Quiz</span>
                 </button>
@@ -76,6 +88,31 @@ export default function NavBar() {
           </div>
         </div>
       </div>
+
+      <SharedModal
+        show={modalState === "add"}
+        title="Set up a new quiz"
+        onSave={() => {
+         ()=>{}
+        }}
+        onClose={handleClose}
+        body={
+          modalState =="add"?<QuizModal setCode={setCode} setModalState={setModalState} handleClose={handleClose}/>:""
+        }
+      />
+            <SharedModal
+        show={modalState === "quiz-code"}
+        title=""
+        onSave={() => {
+          console.log("hello");
+        }}
+        omitHeader={true}
+        onClose={handleClose}
+        body={
+          <CodeModal handleClose={handleClose} code={code}/>
+
+        }
+      />
     </>
   );
 }

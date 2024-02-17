@@ -1,35 +1,31 @@
-import { Link, useParams } from "react-router-dom";
-import Label from "../../../Shared/Label/Label";
 import { useEffect, useState } from "react";
-import { getData } from "../../../ApiUtls/ApiUtls";
 import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { getData } from "../../../ApiUtls/ApiUtls";
+import SharedModal from "../../../Shared/Modal/Modal";
+import Label from "../../../Shared/Label/Label";
 import Loading from "../../../Shared/Loading/Loading";
-import SharedModal from "../../../Shared/AddModal/AddModal";
-import QuizModal from "../QuizModal/QuizModal";
 import CodeModal from "../CodeModal/CodeModal";
+import QuizModal from "../QuizModal/QuizModal";
 
 export interface quiz {
-  data: {
-    _id:string;
-    title: string;
-    schadule: string;
-    duration: string;
-    questions_number: string;
-    score_per_question: string;
-    description: string;
-    type: string;
-  };
+  _id: string;
+  title: string;
+  schadule: string;
+  duration: string;
+  questions_number: string;
+  score_per_question: string;
+  description: string;
+  type: string;
 }
 
 export default function SpacificQuiz() {
   const { quizId } = useParams();
   const { headers } = useSelector((state: any) => state.userData);
   const [quiz, setQuiz] = useState<quiz>();
-
   useEffect(() => {
     getData({ path: `quiz/${quizId}`, headers, setState: setQuiz });
   }, []);
-
 
   const [modalState, setModalState] = useState("close");
   const [code, setCode] = useState<string>("");
@@ -40,7 +36,6 @@ export default function SpacificQuiz() {
     setModalState("update");
   };
 
-
   return (
     <>
       {quiz ? (
@@ -49,38 +44,38 @@ export default function SpacificQuiz() {
             Quizzes <i className="fa-solid fa-angle-right text-secondry"></i>
             <i className="fa-solid fa-angle-right text-secondry"></i>
           </Link>
-          <span>{quiz?.data?.title}</span>
+          <span>{quiz?.title}</span>
 
-          <div className="grid md:grid-cols-3 grid-cols-1">
+          <div className="grid lg:grid-cols-3 grid-cols-1">
             <div className="content my-4 mx-2">
               <div className="header border-2 p-3 rounded-xl">
-                <h2 className="text-2xl font-bold">{quiz?.data?.title}</h2>
+                <h2 className="text-2xl font-bold">{quiz?.title}</h2>
                 <div className="flex my-3">
                   <p>
                     <i className="fa-solid fa-calendar-days mr-1"></i>
-                    {quiz.data.schadule.split("T")[0]}
+                    {quiz.schadule?.split("T")[0]}
                   </p>
                   <p>
                     <i className="fa-solid fa-clock mx-1"></i>
-                    {quiz.data.schadule.split("T")[1].split(".")[0]}
+                    {quiz.schadule?.split("T")[1].split(".")[0]}
                   </p>
                 </div>
-                <Label word="Duration" value={quiz?.data?.duration} />
+                <Label word="Duration" value={quiz?.duration} />
                 <Label
                   word="Number of questions"
-                  value={quiz?.data?.questions_number}
+                  value={quiz?.questions_number}
                 />
                 <Label
                   word="Score per question"
-                  value={quiz?.data?.score_per_question}
+                  value={quiz?.score_per_question}
                 />
                 <Label
                   word="Description"
                   class_Name="grid-cols-1"
                   textClassName="text-sm"
-                  value={quiz?.data?.description}
+                  value={quiz?.description}
                 />
-                <Label word="Question bank used" value={quiz?.data?.type} />
+                <Label word="Question bank used" value={quiz?.type} />
                 <div className="flex items-center">
                   <input
                     id="link-checkbox"
@@ -95,7 +90,10 @@ export default function SpacificQuiz() {
                   </label>
                 </div>
                 <div className="text-end">
-                  <button onClick={openUpdateModal} className="bg-zinc-900 hover:bg-zinc-700 text-white rounded-lg px-3 py-1 text-sm font-bold my-2">
+                  <button
+                    onClick={openUpdateModal}
+                    className="bg-zinc-900 hover:bg-zinc-700 text-white rounded-lg px-3 py-1 text-sm font-bold my-2"
+                  >
                     <i className="fa-solid fa-pen text-white mx-1"></i>
                     Edit
                   </button>
@@ -110,19 +108,27 @@ export default function SpacificQuiz() {
         </div>
       )}
 
-
-<SharedModal
+      <SharedModal
         show={modalState === "update"}
         title="Update quiz"
         onSave={() => {
-         ()=>{}
+          () => {};
         }}
         onClose={handleClose}
         body={
-          modalState =="update"?<QuizModal quiz={quiz} setCode={setCode} setModalState={setModalState} handleClose={handleClose}/>:""
+          modalState == "update" ? (
+            <QuizModal
+              quiz={quiz}
+              setCode={setCode}
+              setModalState={setModalState}
+              handleClose={handleClose}
+            />
+          ) : (
+            ""
+          )
         }
       />
-            <SharedModal
+      <SharedModal
         show={modalState === "quiz-code"}
         title=""
         onSave={() => {
@@ -130,10 +136,7 @@ export default function SpacificQuiz() {
         }}
         omitHeader={true}
         onClose={handleClose}
-        body={
-          <CodeModal handleClose={handleClose} code={code}/>
-
-        }
+        body={<CodeModal handleClose={handleClose} code={code} />}
       />
     </>
   );

@@ -31,18 +31,14 @@ export const fetchDataForSlice = (path: string, fn: any): void => {
   axios
     .get(`${baseUrl}/${path}`, {
       headers: {
-        headers: {
-          Authorization: Cookies.get("userData")
-            ? `Bearer ${JSON.parse(String(Cookies.get("userData"))).accessToken}`
-            : null,
-        },
+        Authorization: Cookies.get("userData")
+        ? `Bearer ${JSON.parse(String(Cookies.get("userData"))).accessToken}`
+        : null,
       },
     })
     .then((response) => {
-      console.log(response.data);
-      
+
       fn(response.data);
-      // console.log(response.data);
     
     })
     .catch((error) => {

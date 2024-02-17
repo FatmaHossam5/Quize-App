@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SharedModal from "../../Shared/AddModal/AddModal";
+import SharedModal from "../../Shared/Modal/Modal";
 import UpcomingQuizes from "./UpcomingQuizes/UpcomingQuizes";
 import CodeModal from "./CodeModal/CodeModal";
 import CompletedQuizzes from "./CompletedQuizzes/CompletedQuizzes";

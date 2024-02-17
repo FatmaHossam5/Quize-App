@@ -1,8 +1,6 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { fetchDataForSlice } from "./ApiUtls/ApiUtls";
 import "./App.css";
 import ChangePassword from "./Components/ChangePassword/ChangePassword";
 import Groups from "./Components/Groups/Groups";
@@ -17,13 +15,10 @@ import RestPassword from "./Components/RestPassword/RestPassword";
 import Results from "./Components/Results/Results";
 import Students from "./Components/Students/Students";
 import ViewResult from "./Components/ViewResult/ViewResult";
-import { setUpcomingQuizzes } from "./Redux/Slices/UpcomingQuizzessSlice/UpcomingQuizzessSlice";
 import AuthLayout from "./Shared/AuthLayout/AuthLayout";
 import MasterLayout from "./Shared/MasterLayout/MasterLayout";
 import NotFound from "./Shared/NotFound/NotFound";
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
-import { setCompletedQuizzes } from "./Redux/Slices/CompletedQuizzes/CompletedQuizzes";
-import { setGroup } from "./Redux/Slices/GroupSlice/GroupSlice";
 import Quiz from "./Components/StudentComponents/Quiz/Quiz";
 import StudentsQuestion from "./Components/StudentComponents/Student'sQuestion/StudentsQuestion";
 
@@ -31,17 +26,6 @@ import StudentsQuestion from "./Components/StudentComponents/Student'sQuestion/S
 function App() {
   
   let { userData } = useSelector((state: any) => state.userData);
-  const dispatch =useDispatch();
-  const fetchUpcomingQuizzes=(response:any)=>{dispatch(setUpcomingQuizzes(response))}
-  const fetchCompletedQuizzes=(response:any)=>{dispatch(setCompletedQuizzes(response))}
-  const fetchGroups=(response:any)=>{
-   dispatch(setGroup(response))}
-
-  useEffect(() => {
-    fetchDataForSlice("quiz/incomming",fetchUpcomingQuizzes);
-    fetchDataForSlice('quiz/completed',fetchCompletedQuizzes);
-    fetchDataForSlice('group',fetchGroups);
-  }, [dispatch]);
 
 
   const routes = createBrowserRouter([
@@ -75,8 +59,6 @@ function App() {
         { path: "request-reset-password", element: <RequsetResetPass /> },
         { path: "reset-password", element: <RestPassword /> },
         { path: "change-password", element: <ChangePassword /> },
-        
-
         
       ],
     },

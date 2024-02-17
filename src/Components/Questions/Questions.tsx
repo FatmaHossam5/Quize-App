@@ -61,7 +61,7 @@ export default function Questions() {
           <h3 className="font-bold mt-3 ">Bank Of Questions</h3>
           <button
             onClick={handleAddModal}
-            className="border rounded-2xl border-black mt-3 mr-3 px-4 "
+            className="border rounded-2xl hover:text-gray-50 hover:bg-zinc-900 duration-500 border-black mt-3 mr-3 px-4 "
           >
             <i className="fa-solid fa-clock  "></i>
             <span>Add Question</span>
@@ -94,7 +94,7 @@ export default function Questions() {
                     </thead>
 
                     <tbody>
-                      {questionsList.map((question, idx) => (
+                      {questionsList.map((question:any, idx:number) => (
                         <tr
                           key={idx}
                           className=" border rounded-2xl divide-x my-4 dark:border-neutral-500"
@@ -142,7 +142,6 @@ export default function Questions() {
       ) : (
         ""
       )}
-
       {modalState === "update" ? (
         <UpdateQuestionModal
           getAllQuestions={getAllQuestions}
@@ -153,7 +152,6 @@ export default function Questions() {
       ) : (
         ""
       )}
-
       {modalState === "delete" ? (
         <DeleteQuestionModal
           getAllQuestions={getAllQuestions}

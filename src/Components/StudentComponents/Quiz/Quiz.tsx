@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import SharedModal from '../../../Shared/AddModal/AddModal';
+
 import UpcomingQuizes from '../../Quizzes/UpcomingQuizes/UpcomingQuizes';
 import CompletedQuizzes from '../../Quizzes/CompletedQuizzes/CompletedQuizzes';
 import axios from 'axios';
@@ -8,6 +8,7 @@ import { baseUrl } from '../../../ApiUtls/ApiUtls';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../../Shared/ErrorMessage/ErrorMessage';
+import SharedModal from '../../../Shared/Modal/Modal';
 
 export default function Quiz() {
     const [modalState, setModalState] = useState("close");
@@ -19,16 +20,16 @@ export default function Quiz() {
     const showAddModal = () => {
       setModalState("add1");
     };
+    const showSuccessJoinModal = () => {
+      setModalState("success");
+    };
     const handleClose = () => {
         setModalState("close");
       };
-      const joinQuiz=(data)=>{
-        console.log(data);
-        
-        axios.post(`${baseUrl}/quiz/join`,data,headers).then((response)=>{
-          console.log(headers);
-          
-          console.log(response);
+      const joinQuiz=(data)=>{  
+        axios.post(`${baseUrl}/quiz/join`,data,headers).then((response)=>{ 
+         console.log(response);
+         showSuccessJoinModal()
           
         }).catch((error)=>{
           console.log(error);
@@ -58,7 +59,7 @@ export default function Quiz() {
           <CompletedQuizzes />
         </div>
       </div>
-      <SharedModal
+      {/* <SharedModal
         show={modalState === "add1"}
         title="Join Quiz"
         onSave={
@@ -72,12 +73,13 @@ export default function Quiz() {
             <div className="flex items-center justify-center">
               <div className="text-center">
               
-                <h2 className="font-bold text-xl mt-2">
+                <h2 className="font-bold text-xl my-2">
                 Join Quiz
                 </h2>
                 <span>Input the code received for the quiz below to join</span>
-                <form onSubmit={handleSubmit(joinQuiz)}  className="code mt-2 flex rounded-xl">
-              <label
+                <form onSubmit={handleSubmit(joinQuiz)}  >
+                  <div className="code mt-2 flex rounded-xl">
+                  <label
                 htmlFor="code"
                 className="bg-authImage px-4 py-2 font-semibold rounded-l-xl text-center"
              
@@ -97,12 +99,14 @@ export default function Quiz() {
               ) : (
                 ""
               )}
+                  </div>
+         
          
               
                 <div className='   flex justify-center items-center mt-2' >
 
                     <div className='border w-[25%] py-2 '>
-                        <button>
+                        <button type='submit'>
                     <i className="fa-solid fa-check"></i>
 
                         </button>
@@ -121,6 +125,30 @@ export default function Quiz() {
             </div>
           </div>
         }
+      /> */}
+      <SharedModal
+       show={modalState === "add1"}
+       title="Join Quiz"
+       onSave={
+  ()=>{}
+       }
+       
+       omitHeader={true}
+       onClose={handleClose}
+       body={
+<>
+<div className='text-center'>
+<i className="fa-solid fa-circle-check fa-3x"></i>
+</div>
+<div className='text-center'>
+  <h3>Quiz joined successfully</h3>
+  <p>Python for noobs Quiz one</p>
+</div>
+<div>
+  <button  className="bg-secondry px-8 rounded-2xl mt-8">close</button>
+</div>
+ </>
+       }
       />
     </>
   )
