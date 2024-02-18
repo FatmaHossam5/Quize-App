@@ -12,7 +12,7 @@ export default function UpcomingQuizes({upcomingQuizzes}:UpcomingQuizes) {
     <div className="upcoming-quizzes p-3 w-full">
       {upcomingQuizzes &&<div className="border rounded-xl">
         <h5 className="text-lg font-semibold my-2 mx-2">Upcoming quizzes</h5>
-        {location.pathname=="/dashboard/quizzes"?
+        {location.pathname=="/dashboard/quizzes"||location.pathname=="student"?
           upcomingQuizzes
             .slice(0, 2)
             .map((quiz:any,idx:number) => (

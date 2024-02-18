@@ -14,6 +14,7 @@ import RequsetResetPass from "./Components/RequsetResetPass/RequsetResetPass";
 import RestPassword from "./Components/RestPassword/RestPassword";
 import Results from "./Components/Results/Results";
 import Quiz from "./Components/StudentComponents/Quiz/Quiz";
+import StudentsQuestion from "./Components/StudentComponents/Student'sQuestion/StudentsQuestion";
 import Students from "./Components/Students/Students";
 import ViewResult from "./Components/ViewResult/ViewResult";
 import AuthLayout from "./Shared/AuthLayout/AuthLayout";
@@ -22,8 +23,6 @@ import NotFound from "./Shared/NotFound/NotFound";
 import ProtectedRoute from "./Shared/ProtectedRoute/ProtectedRoute";
 import ProtectedRouteForStudent from "./Shared/ProtectedRouteForStudent/ProtectedRouteForStudent";
 import StudentLayout from "./Shared/StudentLayout/StudentLayout";
-import CollectValue from "./Components/CollectValue/CollectValue";
-import StudentsQuestion from "./Components/StudentComponents/Student'sQuestion/StudentsQuestion";
 
 
 function App() {
@@ -73,7 +72,6 @@ function App() {
         { index: true, element: <Quiz /> },
         { path: "results", element: <Results/>},
         { path: "results/:viewResults", element: <ViewResult /> },
-       
         { path: "quizzes", element: <Quiz /> },
         { path: "questions/:quizId", element: <StudentsQuestion /> },
       ],

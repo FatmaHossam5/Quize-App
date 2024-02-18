@@ -10,7 +10,7 @@ interface CompletedQuizzes {
 export default function CompletedQuizzes({
   completedQuizzes,
 }: CompletedQuizzes) {
-  // const {completedQuizzes}=useSelector((state:any)=>state.CompletedQuizzes);
+  
 
   return (
     <div className="completed-quizzes px-3 w-full">
