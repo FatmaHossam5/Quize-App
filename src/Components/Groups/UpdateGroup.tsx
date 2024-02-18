@@ -45,8 +45,9 @@ export default function UpdateGroup({ getGroups, isOpen, onClose, group }) {
   const getStudents = () => {
     axios.get(`${baseUrl}/student`, headers).then((response) => {
       setStudentsList(response.data);
-      console.log(response.data);
-    });
+    }).catch((err)=>{
+      toast.error(err.response.data?.message)
+    })
   };
 
   useEffect(() => {
