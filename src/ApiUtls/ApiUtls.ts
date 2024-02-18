@@ -18,7 +18,10 @@ export const getData = ({
   axios
     .get(`${baseUrl}/${path}`, headers)
     .then((response) => {
+      
+      
       setState ? setState(response.data) : console.log(response.data);
+   
     })
     .catch((error) => {
       toast.error(error.response.data.message || "Invalid Data");

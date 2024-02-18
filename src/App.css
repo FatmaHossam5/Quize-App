@@ -4,3 +4,11 @@
 .css-wx7wi4{
     background-color: #FFEDDF;
 }
+.menu-text {
+    color: black; /* Default text color */
+  }
+  
+ 
+.menu-text:hover {
+    color: white; /* Text color on hover */
+  }

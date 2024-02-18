@@ -93,20 +93,20 @@ const [isLoading, setisLoading] = useState(false)
               <NoData />
             )}
 
-            {completedQuizzes?.length == 0 ? (
-              <div className="md:my-4 ">
-                <h2 className="text-1xl font-semibold">Completed Quizzes</h2>
-                <NoData />
-              </div>
-            ) : completedQuizzes > 0 ? (
-              <div className="my-3">
-                <CompletedQuizzes completedQuizzes={completedQuizzes} />
-              </div>
-            ) : (
-              <div className="h-[30vh] w-full flex items-center justify-center text-5xl">
-                <Loading />
-              </div>
-            )}
+{completedQuizzes && completedQuizzes.length > 0 ? (
+      <div className="my-3">
+        <CompletedQuizzes completedQuizzes={completedQuizzes} />
+      </div>
+    ) : completedQuizzes && completedQuizzes.length === 0 ? (
+      <div className="md:my-4">
+        <h2 className="text-1xl font-semibold">Completed Quizzes</h2>
+        <NoData />
+      </div>
+    ) : (
+      <div className="h-[30vh] w-full flex items-center justify-center text-5xl">
+        <Loading />
+      </div>
+    )}
           </div>
         ) : (
           <NoData />
