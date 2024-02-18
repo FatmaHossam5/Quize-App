@@ -75,7 +75,7 @@ console.log(err);
     if (userId) {
       return handleAddStudent();
     } else {
-      toast.error("in-valid name");
+      toast.error("in-valid name or this student is already in group");
       setaddModalLoading(false);
     }
   };
@@ -98,8 +98,6 @@ console.log(err);
 
   useEffect(() => {
     getGroups();
-    console.log(groups);
-    
   }, []);
 
   return (

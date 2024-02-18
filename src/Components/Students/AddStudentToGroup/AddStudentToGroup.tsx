@@ -16,7 +16,6 @@ export default function AddStudentToGroup({selectedStudentId,isLoading}:AddStude
     const [studentswithOutGroup, setStudentswithOutGroup] = useState(new Array());
     const [filteredNames, setFilteredNames] = useState([]);
     const [nameInput, setNameInput] = useState('');
-   
     const { headers } = useSelector((state: any) => state.userData);
 
     const getStudentsWithoutGroup=()=>{

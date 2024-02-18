@@ -57,11 +57,11 @@ const deleteGroup =()=>{
               </button>
             </div>
           </div>
-          {isloading?<div className="text-center text-2xl"><Loading /></div> :''}
-
-          <p className="py-12 px-8 text-lg font-bold">
+          {isloading?<div className="text-center p-3 my-4 text-5xl"><Loading /></div> :          <p className="py-8 px-8 text-lg font-bold">
             Are you sure you want to delete this group?
-          </p>
+          </p>}
+
+
         </div>
       </div>
     </>
