@@ -155,7 +155,7 @@ console.log(err);
                   </div>
                 ) : (
                   <div className="w-full flex items-center justify-center">
-                    <div className=" text-6xl w-[70%] py-5">
+                    <div className=" text-3xl w-[70%]">
                       <NoData />
                     </div>
                   </div>

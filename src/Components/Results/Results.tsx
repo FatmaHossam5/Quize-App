@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { getData } from "../../ApiUtls/ApiUtls";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import NoData from "../../Shared/NoData/NoData";
+import Loading from "../../Shared/Loading/Loading";
 
 export default function Results() {
   const { headers } = useSelector((state: any) => state.userData);
-  const [getResults, setGetResults] = useState<object[]>([]);
+  const [getResults, setGetResults] = useState<object[]>();
 
   const getAllResults = () => {
     getData({ path: 'quiz/result', headers, setState: setGetResults });
@@ -25,6 +27,12 @@ export default function Results() {
           </div>
           <div className="result">
             <div className="overflow-x-auto p-3">
+              {!getResults?
+
+              <div className="flex text-5 items-center justify-center text-5xl">
+              <Loading/>
+            </div>
+              :getResults.length>0?
               <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                 <thead className="ltr:text-left rtl:text-right">
                   <tr className="bg-black">
@@ -62,6 +70,9 @@ export default function Results() {
 
                 </tbody>
               </table>
+              :            
+<NoData/>
+            }
             </div>
           </div>
         </div>

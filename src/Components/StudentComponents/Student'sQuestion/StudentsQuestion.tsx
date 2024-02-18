@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import { baseUrl } from '../../../ApiUtls/ApiUtls';
+import Loading from '../../../Shared/Loading/Loading';
 interface Question {
   _id: string;
   title: string;
@@ -21,17 +22,22 @@ interface Submission {
 }
 export default function StudentsQuestion() {
   const { quizId } = useParams();
-  const [questions, setQuestions] = useState<Question[]>([])
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [quizName, setQuizName] = useState<string>("");
   const { headers } = useSelector((state: any) => state.userData);
   const { register } = useForm();
   const [answers, setAnswers] = useState<Submission[]>([]);
-
-
+  const [isLoading, setIsLoading] = useState(false)
   const getQuestions = () => {
+    setIsLoading(true)
     axios.get(`${baseUrl}/quiz/without-answers/${quizId}`, headers).then((response) => {
       setQuestions(response.data.data.questions)
+      setQuizName(response.data.data.title);
+      
     }).catch((error) => {
       toast.error(error.response.data.message)
+    }).finally(()=>{
+      setIsLoading(false)
     })
   }
 
@@ -49,10 +55,7 @@ export default function StudentsQuestion() {
       question: questionId,
       answer: selectedAnswer,
     };
-
-
     const existingSubmissionIndex = answers.findIndex(submission => submission.question === questionId);
-
 
     if (existingSubmissionIndex !== -1) {
       setAnswers(prevAnswers => {
@@ -73,13 +76,13 @@ export default function StudentsQuestion() {
     <>
       <div className='questions pt-3 mt-5 border rounded-xl'>
         <div className='m-3 font-bold'>
-          QUIZ Name
+          QUIZ Name: {quizName ||""}
         </div>
 
-        {questions.map((question, index) =>
-          <div key={index} className='questionCard m-3 w-50  p-2  shadow-md rounded-lg  '>
+        {!isLoading?questions.map((question, index) =>
+          <div key={index} className='questionCard m-3   p-2  shadow-md rounded-lg  '>
 
-            <div className='questionHeader w-auto bg-authImage  rounded-md mt-1 py-1 text-center ' {...register('question')} >
+            <div className='questionHeader w-auto bg-authImage  rounded-md mt-1 py-1 px-2 ' {...register('question')} >
 
               {question.title}
             </div>
@@ -122,9 +125,13 @@ export default function StudentsQuestion() {
             </div>
 
           </div>
-        )}
+        ):<div className='flex items-center justify-center h-[70vh] text-5xl'>
+          <Loading/>
+          </div>}
 
-        <button onClick={submitAnswers}>Submit</button>
+        <div className="text-center">
+        <button className='bg-authImage font-semibold hover:bg-red-200 rounded-3xl duration-500 mb-5 px-12 py-1 mr-8' onClick={submitAnswers}>Submit</button>
+        </div>
       </div>
     </>
   )
