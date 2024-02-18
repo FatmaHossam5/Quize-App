@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { baseUrl } from '../../../ApiUtls/ApiUtls';
 import Loading from '../../../Shared/Loading/Loading';
 import SharedModal from '../../../Shared/Modal/Modal';
+import { useNavigate } from 'react-router-dom';
 interface Question {
   _id: string;
   title: string;
@@ -27,9 +28,11 @@ export default function StudentsQuestion() {
   const [quizName, setQuizName] = useState<string>("");
   const { headers } = useSelector((state: any) => state.userData);
   const { register } = useForm();
+  const navigate =useNavigate()
   const [answers, setAnswers] = useState<Submission[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [modalState, setModalState] = useState("close");
+
   const getQuestions = () => {
     setIsLoading(true)
     axios.get(`${baseUrl}/quiz/without-answers/${quizId}`, headers).then((response) => {
@@ -46,8 +49,15 @@ export default function StudentsQuestion() {
   const submitAnswers = () => {
     axios.post(`${baseUrl}/quiz/submit/${quizId}`, { answers }, headers).then((response) => {
       toast.success(response.data.data.message)
+      showResultModal()
+      setTimeout(() => {
+        navigate(`/student`);
+      }, 2000);
     }).catch((error) => {
       toast.error(error.response.data.message)
+      setTimeout(() => {
+        navigate(`/student`);
+      }, 2000);
     });
 
   }
@@ -155,8 +165,8 @@ export default function StudentsQuestion() {
 <i className="fa-solid fa-circle-check fa-3x"></i>
 </div>
 <div className='text-center '>
-  <h3 className='pb-2 font-semibold'>Quiz Finished successfully</h3>
-  <p className=' font-semibold'>your Score:{score}</p>
+  <h3 className='pb-2 font-semibold'>Quiz submitted successfully</h3>
+
 </div>
 <div className='text-center'>
   <button onClick={handleClose}  className="bg-secondry px-8 rounded-2xl mt-8 font-semibold">close</button>

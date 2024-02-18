@@ -22,7 +22,7 @@ export default function Quiz() {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-  const [quizId, setQuizId] = useState("");
+
   const { upcomingQuizzes } = useSelector(
     (state: any) => state.upcomingQuizzes
   );
