@@ -45,6 +45,9 @@ export default function Results() {
                     <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-50">
                     Status
                     </th>
+                    <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-50 ">
+                    participants
+                    </th>
                     <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-50">
                     View
                     </th>
@@ -58,6 +61,7 @@ export default function Results() {
       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{result.quiz.title}</td>
       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{result.quiz.type}</td>
       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{result.quiz.status}</td>
+      <td className="whitespace-nowrap pl-14 py-2 font-medium text-gray-900 ">{result.participants.length}</td>
       <td>
         <Link to={`/dashboard/results/${result.quiz.title}`}>
           <button className="border-0 mx-3 bg-secondry rounded-xl px-3">

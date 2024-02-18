@@ -6,6 +6,7 @@ import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import { baseUrl } from '../../../ApiUtls/ApiUtls';
 import Loading from '../../../Shared/Loading/Loading';
+import SharedModal from '../../../Shared/Modal/Modal';
 interface Question {
   _id: string;
   title: string;
@@ -27,7 +28,8 @@ export default function StudentsQuestion() {
   const { headers } = useSelector((state: any) => state.userData);
   const { register } = useForm();
   const [answers, setAnswers] = useState<Submission[]>([]);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [modalState, setModalState] = useState("close");
   const getQuestions = () => {
     setIsLoading(true)
     axios.get(`${baseUrl}/quiz/without-answers/${quizId}`, headers).then((response) => {
@@ -67,7 +69,12 @@ export default function StudentsQuestion() {
       setAnswers(prevAnswers => [...prevAnswers, newSubmission]);
     }
   };
-
+  const showResultModal = () => {
+    setModalState("score");
+  };
+  const handleClose = () => {
+    setModalState("close");
+  };
 
   useEffect(() => {
     getQuestions()
@@ -133,6 +140,30 @@ export default function StudentsQuestion() {
         <button className='bg-authImage font-semibold hover:bg-red-200 rounded-3xl duration-500 mb-5 px-12 py-1 mr-8' onClick={submitAnswers}>Submit</button>
         </div>
       </div>
+      <SharedModal
+       show={modalState === "score"}
+       title="Join Quiz"
+       onSave={
+  ()=>{}
+       }
+       
+       omitHeader={true}
+       onClose={handleClose}
+       body={
+<>
+<div className='text-center mb-3'>
+<i className="fa-solid fa-circle-check fa-3x"></i>
+</div>
+<div className='text-center '>
+  <h3 className='pb-2 font-semibold'>Quiz Finished successfully</h3>
+  <p className=' font-semibold'>your Score:{score}</p>
+</div>
+<div className='text-center'>
+  <button onClick={handleClose}  className="bg-secondry px-8 rounded-2xl mt-8 font-semibold">close</button>
+</div>
+ </>
+       }
+      />
     </>
   )
 }
