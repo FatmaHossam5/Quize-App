@@ -1,6 +1,6 @@
 import DeleteGroup from "./DeleteGroup";
-import AddGroup from "./addGroup";
-import UpdateGroup from "./updateGroup";
+import AddGroup from "./AddGroup";
+import UpdateGroup from "./UpdateGroup";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -71,11 +71,11 @@ export default function Groups() {
         <div className="p-3">
           <div className="border rounded-2xl ">
             <h3 className="ml-12 py-2 font-semibold">groups List</h3>
-            {groupsList.length == 0 ? (
+            {isloading ? (
               <div className="flex items-center justify-center h-[30vh] w-full text-5xl">
                 <Loading />
               </div>
-            ) : groupsList.length == 0 ? (
+            ) : groupsList.length === 0 ? (
               <NoData />
             ) : (
               <div className="grid md:grid-cols-2  p-2">
